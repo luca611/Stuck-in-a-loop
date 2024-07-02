@@ -9,36 +9,39 @@ namespace the_hospital
 {
     public class BasicWindow
     {
+        //------screen settings---------
+        public const int ScreenWidth = 800;
+        public const int ScreenHeight = 450;
+
+        //-------the floor---
+        public static Rectangle Floor = new Rectangle(0, ScreenHeight - 100, ScreenWidth, 100);
         public static int Main()
         {
-            //------screen settings---------
-            const int screenWidth = 800;
-            const int screenHeight = 450;
-
-            InitWindow(screenWidth, screenHeight, "The hospital");
+            InitWindow(ScreenWidth, ScreenHeight, "The hospital");
             SetTargetFPS(60); // ⚠ ️the game speed is based on this value ⚠  ️
 
             //-------the main character------
-            Vector2 player = new((float)screenWidth / 2, (float)screenHeight / 2);
+            Vector2 player = new((float)ScreenWidth / 2, (float)ScreenHeight / 2);
             
-            //-------the floor and objects---
-            Rectangle floor = new Rectangle(0, screenHeight - 100, screenWidth, 100);
-
+            
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
                 DrawText("developing state\nlast addition: movement", 10, 10, 20, Raylib_cs.Color.White);
                 //---updating player position---
-                player = Movement.UpdateMovement(player, floor);
+                player = Movement.UpdateMovement(player, Floor);
                 //---updating the scene---------
-                player = Scenes.UpdateScene(player, floor, screenWidth);
+                player = Scenes.UpdateScene(player, Floor, ScreenWidth);
+                //---check if the player likes to shoot-------
+                Shooting.HandleShooting(player);
+                
                 
                 //---drawing the game frame-----
                 BeginDrawing();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
-                DrawRectangleRec(floor, Raylib_cs.Color.Green);
+                DrawRectangleRec(Floor, Raylib_cs.Color.Green);
                 DrawCircleV(player, 50, Raylib_cs.Color.Maroon);
-
+                Shooting.Draw();
                 EndDrawing();
             }
 

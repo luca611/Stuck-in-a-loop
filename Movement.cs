@@ -9,6 +9,7 @@ public static class Movement
     private static Vector2 _playerSpeed = new Vector2(0, 0);
     private const float Gravity = 0.5f; //change this value to change the gravity force
 
+    public static int Direction = 0;    // 0 = right, 1 = left
     /*
      * Update the player movement if pressing any key (right, left, space bar or shift for speed)
      * in: player to move and the floor to apply the physic (i don't want the ppl to fall in the hell, even if it would be fun ngl)
@@ -19,10 +20,12 @@ public static class Movement
         //----------------x movement--------------------------------
         if (IsKeyDown(KeyboardKey.Right) || IsKeyDown(KeyboardKey.D))
         {
+            Direction = 0;
             _playerSpeed.X = IsKeyDown(KeyboardKey.RightShift) ? 6.0f : 4.0f;
         }
         else if(IsKeyDown(KeyboardKey.Left) || IsKeyDown(KeyboardKey.A))
         {
+            Direction = 1;
             _playerSpeed.X = IsKeyDown(KeyboardKey.LeftShift) ? -6.0f : -4.0f;
         }
         else
