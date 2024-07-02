@@ -51,4 +51,6 @@ public static class Scenes
         //---the visibility is handled outside of this function (the projectle was coming out of the roof otherwise, don't know why yet)---
         return bullet;
     }
+    
+    //#TODO: add a function to update the enemy position if the enemy is out of the screen and change is scene
 }

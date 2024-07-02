@@ -21,6 +21,7 @@ public static class Movement
         if (IsKeyDown(KeyboardKey.Right) || IsKeyDown(KeyboardKey.D))
         {
             Direction = 0;
+            _playerSpeed.X = IsKeyDown(KeyboardKey.LeftShift) ? +6.0f : +4.0f;
         }
         else if(IsKeyDown(KeyboardKey.Left) || IsKeyDown(KeyboardKey.A))
         {
