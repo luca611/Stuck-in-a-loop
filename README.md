@@ -19,4 +19,4 @@ You have to escape from only 3 rooms witch seems to be all want you got.
 ## Diary
 📅 **Day 1:** added basic movement (left and right) also jump and physic (yk no flying around here)
 
-📅 **Day 2:** organising the workspace (it was a mess). Added shooting and bullet loop physic (they have gravity!!)
+📅 **Day 2:** organising the workspace (it was a mess). Added shooting and bullet loop physic (they have gravity!!). Added a basic enemy that follows you.
