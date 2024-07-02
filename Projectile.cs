@@ -11,6 +11,7 @@ namespace Stuck_in_a_loop_challange
         public Vector2 Position { get; set; }          //position on the screen of the projectile
         public Vector2 Speed { get; set; }             //speed of the projectile
         public Rectangle Size { get; set; }            //size of the projectile
+        public int CurrentProjectileScene { get; set; }          //scene where the projectile is
         private float DistanceTravelled { get; set; } //total distance travelled by the projectile
         private float GravityResistence { get; set; } //amount of px before gravity hits the projectile
 
@@ -26,6 +27,7 @@ namespace Stuck_in_a_loop_challange
             Size = size;
             DistanceTravelled = 0;
             GravityResistence = gravityResistence;
+            CurrentProjectileScene = Scenes.CurrentScene;
         }
 
         /*

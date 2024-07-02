@@ -9,9 +9,14 @@ You are stuck in a loop, a loop of fear, a loop of pain, a loop of despair. You 
 But be careful, you are not alone, there are others like you, others that are stuck in the same loop, others that are trying to escape, others that will do anything to stop you. You have to be fast, you have to be smart, you have to be strong. 
 
 You have to escape from only 3 rooms witch seems to be all want you got.
+
 ## How to play
+- **Move:** `A` and `D` or `Left` and `Right` ⌨️
+- **Jump:** `Space` 🚀
+- **Shoot:** `Left Mouse Button` or `Right Mouse Button` 🔫
+- **Pause:** `P` (not implemented yet)
 
 ## Diary
-📅 **Day 1:** added basic movement (left and right) also jump and physyc (yk no flying around here)
+📅 **Day 1:** added basic movement (left and right) also jump and physic (yk no flying around here)
 
-📅 **Day 2:** organising the workspace (it was a mess).
+📅 **Day 2:** organising the workspace (it was a mess). Added shooting and bullet loop physic (they have gravity!!)
