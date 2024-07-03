@@ -1,25 +1,55 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using Raylib_cs;
 using the_hospital;
 using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange
 {
+    /// <summary>
+    /// Class for the projectiles
+    /// </summary>
     public class Projectile
     {
-        public Vector2 Position { get; set; }          //position on the screen of the projectile
-        public Vector2 Speed { get; set; }             //speed of the projectile
-        public Rectangle Size { get; set; }            //size of the projectile
-        public int CurrentProjectileScene { get; set; }          //scene where the projectile is
-        private float DistanceTravelled { get; set; } //total distance travelled by the projectile
-        private float GravityResistence { get; set; } //amount of px before gravity hits the projectile
-
-        /*
-         * Create a new projectile
-         * in: position of the projectile, speed of the projectile and the size of the projectile
-         * out: the projectile
-         */
+        //---------------------------------VARIABLES-------------------------------------
+        /// <summary>
+        /// <c>Vector2</c> position on the screen of the projectile
+        /// </summary>
+        public Vector2 Position { get; set; }
+        
+        /// <summary>
+        /// <c>Vector2</c> speed of the projectile
+        /// </summary>
+        private Vector2 Speed { get; set; }
+        
+        /// <summary>
+        /// <c>Rectangle</c> size of the projectile
+        /// </summary>
+        public Rectangle Size { get; private set; } 
+        
+        /// <summary>
+        /// <c>int</c> scene where the projectile is
+        /// </summary>
+        public int CurrentProjectileScene { get; set; } 
+        
+        /// <summary>
+        /// <c>float</c> distance travelled by the projectile
+        /// </summary>
+        private float DistanceTravelled { get; set; } 
+        
+        /// <summary>
+        /// <c>float</c> amount of px before gravity starts to apply to the projectile
+        /// </summary>
+        private float GravityResistence { get; set; } 
+        
+        //---------------------------------CODE-------------------------------------
+        
+        /// <summary>
+        /// Constructor of the projectile
+        /// </summary>
+        /// <param name="position"><c>Vector2</c> Starting position of the projectile</param>
+        /// <param name="speed"><c>Vector2</c> Speed of the projectile</param>
+        /// <param name="size"><c>Rectangle</c> Size of the projectile</param>
+        /// <param name="gravityResistence"><c>float</c> Gravity resistence of the projectile</param>
         public Projectile(Vector2 position, Vector2 speed, Rectangle size, float gravityResistence)
         {
             Position = position;
@@ -29,12 +59,11 @@ namespace Stuck_in_a_loop_challange
             GravityResistence = gravityResistence;
             CurrentProjectileScene = Scenes.CurrentScene;
         }
-
-        /*
-         * Update the projectile position
-         * in: none
-         * out: the updated size of the projectile
-         */
+        
+        /// <summary>
+        /// Update the projectile position
+        /// </summary>
+        /// <returns><c>bool</c> true if the projectile should be removed false if not</returns>
         public bool Update()
         {
             //--update the position of the projectile--
@@ -54,14 +83,13 @@ namespace Stuck_in_a_loop_challange
             }
             Size = Size with { X = Position.X, Y = Position.Y };
 
-            return false; // Indicate that the projectile should not be removed
+            return false;    // Indicate that the projectile should not be removed
         }
         
-        /*
-         * does it need explenation?
-         * in: none
-         * out: bool true if the projectile is hitting the ground false otherwise
-         */
+        /// <summary>
+        /// Check if the projectile is hitting the ground (what did you expect from the name?)
+        /// </summary>
+        /// <returns><c>bool</c> true if the projectile is hitting the ground false if not</returns>
         private bool IsHittingGround()
         {
             return CheckCollisionRecs(Size, BasicWindow.Floor);

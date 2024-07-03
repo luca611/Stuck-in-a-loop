@@ -29,11 +29,11 @@ namespace the_hospital
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
-                DrawText("developing state\nlast addition: shooting heheheheh", 10, 10, 20, Raylib_cs.Color.White);
+                DrawText("developing state\nlast addition: basic enemy system", 10, 10, 20, Raylib_cs.Color.White);
                 //---updating player position---
-                Player = Movement.UpdateMovement(Player, Floor);
+                Player = Movement.UpdateMovement();
                 //---updating the scene---------
-                Player = Scenes.UpdateScene(Player, Floor);
+                Player = Scenes.UpdateScene(Player);
                 //---check if the player likes to shoot-------
                 Shooting.HandleShooting(Player);
                 

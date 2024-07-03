@@ -5,114 +5,118 @@ using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
 
+/// <summary>
+/// Class to handle the shooting engine of the game
+/// </summary>
 public static class Shooting
 {
-    public static readonly List<Projectile>
-        ActiveProjectiles = new List<Projectile>(); //list of all the active projectiles
+    //------------------------------VARIABLES--------------------------------------
+    /// <summary>
+    /// <c>List[Projectile]</c> List of all the active projectiles
+    /// </summary>
+    private static readonly List<Projectile> ActiveProjectiles = [];
     
+    /// <summary>
+    /// <c>bool</c> Variable to toggle the visibility of the reload text
+    /// </summary>
     private static bool _reloadTextVisible = true; 
-    private static double _lastToggleTime = 0; //if 1 means that the text is visible, if 0 means that the text is not visible
+    
+    /// <summary>
+    /// <c>double</c> Last state of the toggle 1 means that the text is visible, 0 means that the text is not visible
+    /// </summary>
+    private static double _lastToggleTime;
+    
+    /// <summary>
+    /// <c>const</c> <c>double</c> Interval between toggling the text
+    /// </summary>
     private const double ToggleInterval = 0.5; 
 
+    /// <summary>
+    /// <c> double</c> Time when the last shot was fired
+    /// </summary>
+    private static double _lastShotTime;
 
-    private static double _lastShotTime = 0; // Time when the last shot was fired
-    private static double _shotDelay = 0.35; // Delay between shots in seconds
-    private static int Ammo = 10;
+    /// <summary>
+    /// <c>const</c> <c>double</c> Delay between shots in seconds
+    /// </summary>
+    private const double ShotDelay = 0.35;
 
-    /*
-     * Check if the player is shooting and handle the shooting
-     * in: player position
-     * out: none
-     */
+    /// <summary>
+    /// <c>int</c> Ammo count
+    /// </summary>
+    private static int _ammo = 10;
+    
+    //-----------------------------------CODE--------------------------------------
+    
+    /// <summary>
+    /// check if the player is shooting and in that case handle the shooting
+    /// </summary>
+    /// <param name="player"><c>Vector2</c> player (it only uses its position)</param>
     public static void HandleShooting(Vector2 player)
     {
-        if (IsPlayerShooting() && GetTime() - _lastShotTime >= _shotDelay)
-        {
-            Shoot(player);
-            _lastShotTime = GetTime();
-        }
+        if (!IsPlayerShooting() || !(GetTime() - _lastShotTime >= ShotDelay)) return;
+        Shoot(player);
+        _lastShotTime = GetTime();
     }
 
-    /*
-     * Detect if the player is shooting
-     * in: none
-     * out: bool true if the player is shooting false otherwise
-     */
+    /// <summary>
+    /// Detect if the player is shooting
+    /// </summary>
+    /// <returns><c>bool</c> true if the player is shooting false otherwise</returns>
     private static bool IsPlayerShooting()
     {
-        if (IsKeyDown(KeyboardKey.One) || IsMouseButtonDown(MouseButton.Left)) return true;
-        return false;
+        return IsKeyDown(KeyboardKey.One) || IsMouseButtonDown(MouseButton.Left);
     }
-
-    /*
-     * Create a new projectile and add it to the list of active projectiles
-     * in: player position
-     * out: none
-     */
+    
+    /// <summary>
+    /// create a new projectile and add it to the list of active projectiles
+    /// </summary>
+    /// <param name="player"> <c>Vector2</c> Player (uses only its position) </param>
     private static void Shoot(Vector2 player)
     {   
         //---update the ammo count---
-        if(Ammo == 0) return; // no ammo? no shoot :( 
-        Ammo--;               // Decrease ammo count, remove this if u like to play with infinite ammo
-        Vector2 projectileSpeed;
+        if(_ammo == 0) return; // no ammo? no shoot :( 
+        _ammo--;               // Decrease ammo count (remove = inf ammo)
         
         //----giving the direction to the projectile----
-        if (Movement.Direction == 0)
-        {
-            projectileSpeed = new Vector2(10, 0);
-        }
-        else
-        {
-            projectileSpeed = new Vector2(-10, 0);
-        }
-
-        //---for now all the projectle has the same size but if i'll add gun more I'll change this---
-        Rectangle projectileSize = new Rectangle(player.X, player.Y, 5, 5);
+        var projectileSpeed = Movement.Direction == 0 ? new Vector2(10, 0) : new Vector2(-10, 0);
+        
+        //---for now all the projectile has the same size but if I'll add gun more I'll change this---
+        var projectileSize = new Rectangle(player.X, player.Y, 5, 5);
         ActiveProjectiles.Add(new Projectile(player, projectileSpeed, projectileSize, 100));
     }
     
-    /*
-     * Reload the gun, i mean, what did you expect?
-     * in: none
-     * out: none
-     */
+    /// <summary>
+    /// reload the gun (literally what the name says wow)
+    /// </summary>
     private static void Reload()
     {
-        Ammo = 10;
+        _ammo = 10;
     }
     
-    /*
-     * Check if the player wants to reload the gun really easy, yeah i did a method for it and what?
-     * in: none
-     * out: none
-     */
+    /// <summary>
+    /// check if the player wants to reload the gun (yes it's that simple)
+    /// </summary>
     private static void CheckReload()
     {
-        if (IsKeyPressed(KeyboardKey.R))
-        {
-            Reload();
-        }
+        if (IsKeyPressed(KeyboardKey.R)) Reload();
     }
     
-    /*
-     * Draw the reload text in the middle of the screem, (ik ik i could have done it in the main draw function but i wanted to keep it clean)
-     * in: none
-     * out: none
-     */
+    /// <summary>
+    /// Draw the reload text (ik what ur thinking and yes I made a method for drawing a text,I like to keep things clean)
+    /// </summary>
     private static void DrawReloadText()
     {
-        string reloadText = "Reload [R]";
-        int textWidth = MeasureText(reloadText, 20);
-        int centerX = BasicWindow.ScreenWidth / 2 - textWidth / 2;
-        int centerY = BasicWindow.ScreenHeight - (BasicWindow.ScreenHeight - 100);
+        var reloadText = "Reload [R]";
+        var textWidth = MeasureText(reloadText, 20);
+        var centerX = BasicWindow.ScreenWidth / 2 - textWidth / 2;
+        var centerY = BasicWindow.ScreenHeight - (BasicWindow.ScreenHeight - 100);
         DrawText(reloadText, centerX, centerY, 20, Color.White);
     }
     
-    /*
-     * Draw all the active projectiles (if they are in the same scene as the current scene) and update them
-     * in: none
-     * out: none
-     */
+    /// <summary>
+    /// Draw the projectiles and the reload text if needed
+    /// </summary>
     public static void Draw()
     {
         //update and draw all the active projectiles (if they are in the same scene as the current scene)
@@ -121,39 +125,33 @@ public static class Shooting
             ActiveProjectiles[i] = Scenes.UpdateBulletPosition(ActiveProjectiles[i]);
             var projectile = ActiveProjectiles[i];
 
-            if (projectile.CurrentProjectileScene == Scenes.CurrentScene)
-            {
-                DrawRectangleRec(projectile.Size, Raylib_cs.Color.Black);
-            }
+            if (projectile.CurrentProjectileScene == Scenes.CurrentScene) DrawRectangleRec(projectile.Size, Color.Black);
 
-            if (projectile.Update())
-            {
-                ActiveProjectiles.RemoveAt(i);
-            }
+            if (projectile.Update()) ActiveProjectiles.RemoveAt(i);
         }
     
-        //---reload text and actual reload---
-        if (Ammo == 0)
-        {
-            //timing the blink text 
-            if (GetTime() - _lastToggleTime > ToggleInterval)
-            {
-                _reloadTextVisible = !_reloadTextVisible; // Toggle visibility
-                _lastToggleTime = GetTime(); // Update last time it was toggled
-            }
-            
-            //drawing the text if the circumstances allows it
-            if (_reloadTextVisible)
-            {
-                DrawReloadText();
-            }
-        }
-        else
+        //---check if the player is fine---
+        if (_ammo != 0)
         {
             //don't want to see the text if the player has ammo
             _reloadTextVisible = false;
+            //no need to do anything else if the player has ammo
+            return; 
         }
-
+        
+        //---reload text and actual reload---
+        
+        //timing the blink text 
+        if (GetTime() - _lastToggleTime > ToggleInterval)
+        {
+            _reloadTextVisible = !_reloadTextVisible; // Toggle visibility
+            _lastToggleTime = GetTime(); // Update last time it was toggled
+        }
+            
+        //drawing the text if the circumstances allows it
+        if (_reloadTextVisible) DrawReloadText();
+        
+        //check if the player wants to reload
         CheckReload();
     }
 }

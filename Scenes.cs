@@ -1,21 +1,33 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 using the_hospital;
-using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
 
+/// <summary>
+/// Class to handle the scenes
+/// </summary>
 public static class Scenes
 {
-    public static Color[] SceneList = new Color[] { Raylib_cs.Color.Red, Raylib_cs.Color.Brown, Raylib_cs.Color.Blue };
-    public static int CurrentScene = 0;
+    //------------------------------VARIABLES--------------------------------------
+    /// <summary>
+    /// <c>Color[]</c> Array of colors representing the scenes
+    /// </summary>
+    public static readonly Color[] SceneList = new Color[] { Color.Red, Color.Brown, Color.Blue };
     
-    /*
-     * Update the scene if the player is out of the screen
-     * in: player position, the floor and the screen width
-     * out: updated player position
-     */
-    public static Vector2 UpdateScene(Vector2 player, Rectangle floor)
+    /// <summary>
+    /// <c>int</c> Index of the current scene (default is 0)
+    /// </summary>
+    public static int CurrentScene;
+    
+    //-----------------------------------CODE--------------------------------------
+    
+    /// <summary>
+    /// Update the scene if the player is out of the screen
+    /// </summary>
+    /// <param name="player"><c>Vector2</c> instance of the player</param>
+    /// <returns><c>Vector2</c> updated position of the player (positioned at the sides of the screen)</returns>
+    public static Vector2 UpdateScene(Vector2 player)
     {
         if (player.X > BasicWindow.ScreenWidth) // If the player is out of the screen (right)
         {
@@ -31,11 +43,11 @@ public static class Scenes
         return player;
     }
     
-    /*
-     * Update the bullet position if the bullet is out of the screen
-     * in: the bullet (pew pew)
-     * out: updated bullet position
-     */
+    /// <summary>
+    /// Update the bullet position if the bullet is out of the screen
+    /// </summary>
+    /// <param name="bullet"><c>Projectile</c> the bullet instance to update</param>
+    /// <returns><c>Projectile</c> the updated bullet</returns>
     public static Projectile UpdateBulletPosition(Projectile bullet)
     {
         if (bullet.Position.X > BasicWindow.ScreenWidth)
@@ -48,7 +60,7 @@ public static class Scenes
             bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene - 1 + SceneList.Length) % SceneList.Length;
             bullet.Position = bullet.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
         }
-        //---the visibility is handled outside of this function (the projectle was coming out of the roof otherwise, don't know why yet)---
+        //---the visibility is handled outside of this function---
         return bullet;
     }
     
