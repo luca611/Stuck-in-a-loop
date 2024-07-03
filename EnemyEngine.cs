@@ -19,7 +19,7 @@ public static class EnemyEngine
     /// <summary>
     /// <c>int</c> difficulty of the game
     /// </summary>
-    private static int _difficulty = 1;
+    public static int Difficulty = 1;
     
     //-----------------------------------CODE--------------------------------------
     
@@ -29,13 +29,13 @@ public static class EnemyEngine
     public static void SummonEnemy()
     {
         //----can't summon if the max was reached----
-        if (ActiveEnemies.Count >= MaxEnemies * _difficulty) return;
+        if (ActiveEnemies.Count >= MaxEnemies * Difficulty) return;
         
         //----randomize the health and speed of the enemy based on the diff.----
         var random = new Random();
-        var health = random.Next(1, 1+_difficulty);
+        var health = random.Next(1, 1+Difficulty);
         var scene = random.Next(0, Scenes.SceneList.Length); 
-        float movementSpeed = random.Next(1, _difficulty);
+        float movementSpeed = random.Next(1, Difficulty);
             
         //----create the enemy and add it to the list----
         var enemy = new Enemy(health, movementSpeed,scene);
