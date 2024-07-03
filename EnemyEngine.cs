@@ -34,10 +34,11 @@ public static class EnemyEngine
         //----randomize the health and speed of the enemy based on the diff.----
         var random = new Random();
         var health = random.Next(1, 1+_difficulty);
+        var scene = random.Next(0, Scenes.SceneList.Length); 
         float movementSpeed = random.Next(1, _difficulty);
             
         //----create the enemy and add it to the list----
-        var enemy = new Enemy(health, movementSpeed);
+        var enemy = new Enemy(health, movementSpeed,scene);
         enemy.SummonEnemy();
         ActiveEnemies.Add(enemy);
     }
@@ -64,6 +65,10 @@ public static class EnemyEngine
     /// </summary>
     public static void Draw()
     {
-        foreach (Enemy enemy in ActiveEnemies) enemy.Draw();
+        for(int i = ActiveEnemies.Count - 1; i >= 0; i--)
+        {
+            ActiveEnemies[i] = Scenes.UpdateEnemyPosition(ActiveEnemies[i]);
+            ActiveEnemies[i].Draw();
+        }
     }
 }

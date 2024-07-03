@@ -1,11 +1,8 @@
 ﻿using System.Numerics;
-using System;
-using System.Text;
 using Raylib_cs;
-using Stuck_in_a_loop_challange;
 using static Raylib_cs.Raylib;
 
-namespace the_hospital
+namespace Stuck_in_a_loop_challange
 {
     public class BasicWindow
     {
@@ -14,7 +11,7 @@ namespace the_hospital
         public const int ScreenHeight = 450;
 
         //-------the floor---
-        public static Rectangle Floor = new Rectangle(0, ScreenHeight - 100, ScreenWidth, 100);
+        public static Rectangle Floor = new(0, ScreenHeight - 100, ScreenWidth, 100);
         
         
         //-------the main character------
@@ -43,7 +40,7 @@ namespace the_hospital
                 EnemyEngine.Draw();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
                 DrawRectangleRec(Floor, Raylib_cs.Color.Green);
-                DrawCircleV(Player, 50, Raylib_cs.Color.Maroon);
+                DrawCircleV(Player, 50, Color.Maroon);
                 Shooting.Draw();
                 EndDrawing();
             }

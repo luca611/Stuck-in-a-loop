@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Raylib_cs;
-using the_hospital;
 using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
@@ -14,7 +13,7 @@ public static class Shooting
     /// <summary>
     /// <c>List[Projectile]</c> List of all the active projectiles
     /// </summary>
-    private static List<Projectile> ActiveProjectiles = [];
+    private static readonly List<Projectile> ActiveProjectiles = [];
 
     /// <summary>
     /// <c>bool</c> Variable to toggle the visibility of the reload text
@@ -83,7 +82,7 @@ public static class Shooting
 
         //---for now all the projectile has the same size but if I'll add gun more I'll change this---
         var projectileSize = new Rectangle(player.X, player.Y, 5, 5);
-        ActiveProjectiles.Add(new Projectile(player, projectileSpeed, projectileSize, 100));
+        ActiveProjectiles.Add(new Projectile(player, projectileSpeed, projectileSize, 200));
     }
 
     /// <summary>
@@ -117,7 +116,7 @@ public static class Shooting
     /// <summary>
     /// function to check if the bullet has hit a general enemy (and if so apply the damage)
     /// </summary>
-    /// <param name="bullet"></param>
+    /// <param name="bullet"><c>Projectile</c> bullet to check</param>
     /// <returns></returns>
     private static bool HasShootedAnEnemy(Projectile bullet)
     {
@@ -126,7 +125,6 @@ public static class Shooting
             enemy.GetHit();
             return true;
         }
-
         return false;
     }
     
@@ -138,7 +136,8 @@ public static class Shooting
     /// <returns><c>bool</c> true if it was hit false otherwise</returns>
     private static bool CheckEnemyHit(Projectile bullet, Enemy badGuy)
     {
-        // Check if the projectile's rectangle intersects with the enemy's rectangle
+        if(bullet.CurrentProjectileScene != badGuy.EnemyScene) return false; // Check if the projectile is in the same scene as the enemy (if not don't bother checking for collision)
+        // if it is in the same scene check if the bullet is hitting the enemy
         return CheckCollisionRecs(bullet.Size, new Rectangle(badGuy.Position.X, badGuy.Position.Y, Enemy.Size.Width, Enemy.Size.Height));
     }
 

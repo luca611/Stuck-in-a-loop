@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Raylib_cs;
-using the_hospital;
 
 namespace Stuck_in_a_loop_challange;
 
@@ -50,19 +49,43 @@ public static class Scenes
     /// <returns><c>Projectile</c> the updated bullet</returns>
     public static Projectile UpdateBulletPosition(Projectile bullet)
     {
-        if (bullet.Position.X > BasicWindow.ScreenWidth)
+        switch (bullet.Position.X)
         {
-            bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene + 1) % SceneList.Length;
-            bullet.Position = bullet.Position with { X = 0 };                               // Reset position to the start of the next scene
+            case > BasicWindow.ScreenWidth:
+                bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene + 1) % SceneList.Length;
+                bullet.Position = bullet.Position with { X = 0 };                               // Reset position to the start of the next scene
+                break;
+            case < 0:
+                bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene - 1 + SceneList.Length) % SceneList.Length;
+                bullet.Position = bullet.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
+                break;
         }
-        else if (bullet.Position.X < 0)
-        {
-            bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene - 1 + SceneList.Length) % SceneList.Length;
-            bullet.Position = bullet.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
-        }
+
         //---the visibility is handled outside of this function---
         return bullet;
     }
     
-    //#TODO: add a function to update the enemy position if the enemy is out of the screen and change is scene
+    /// <summary>
+    /// Update the enemy position if the enemy is out of the screen
+    /// </summary>
+    /// <param name="badGuy"><c>Enemy</c> the enemy instance to update</param>
+    /// <returns><c>Enemy</c> the updated Enemy</returns>
+    public static Enemy UpdateEnemyPosition(Enemy badGuy)
+    {
+        switch (badGuy.Position.X)
+        {
+            case > BasicWindow.ScreenWidth:
+                badGuy.EnemyScene = (badGuy.EnemyScene + 1) % SceneList.Length;
+                badGuy.Position = badGuy.Position with { X = 0 };                               // Reset position to the start of the next scene
+                break;
+            case < 0:
+                badGuy.EnemyScene = (badGuy.EnemyScene - 1 + SceneList.Length) % SceneList.Length;
+                badGuy.Position = badGuy.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
+                break;
+        }
+
+        //---the visibility is handled outside of this function---
+        return badGuy;
+    }
+    
 }

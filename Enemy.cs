@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Raylib_cs;
-using the_hospital;
 using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
@@ -15,12 +14,12 @@ public class Enemy
     /// <summary>
     /// <c>int</c> Health of the enemy 
     /// </summary>
-    public int Health { get; private set; }
+    private int Health { get; set; }
     
     /// <summary>
     /// <c>float</c> Movement speed of the enemy
     /// </summary>
-    public float MovementSpeed { get; }
+    private float MovementSpeed { get; }
     
     /// <summary>
     /// <c>Vector2</c> Position of the enemy
@@ -35,25 +34,30 @@ public class Enemy
     /// <summary>
     /// <c>bool</c> Flag to check if the enemy is summoned to avoid multiple generations
     /// </summary>
-    private bool _enemySummoned = false;
+    private bool _enemySummoned;
     
     /// <summary>
     /// <c>bool</c> Flag to check if the enemy is alive
     /// </summary>
     public bool IsAlive = true;
     
-    //-----------------------------------CODE--------------------------------------
+    public int EnemyScene; // Scene where the enemy is
+    private int _direction; // Direction of the enemy
     
+    //-----------------------------------CODE--------------------------------------
+
     /// <summary>
     /// constructor of the enemy
     /// </summary>
     /// <param name="health"><c>int</c> health of the enemy</param>
     /// <param name="movementSpeed"><c>float</c> speed of the enemy </param>
-    public Enemy( int health, float movementSpeed)
+    /// <param name="enemyScene"><c>int</c> starting scene of the enemy</param>
+    public Enemy( int health, float movementSpeed, int enemyScene)
     {
         Position =  new Vector2 (0, 250);
         Health = health;
         MovementSpeed = movementSpeed;
+        EnemyScene = enemyScene;
     }
     
     /// <summary>
@@ -74,6 +78,9 @@ public class Enemy
             randomX = Math.Clamp(randomX, 0, BasicWindow.ScreenWidth - Enemy.Size.Width);
         }
         
+        //---set the direction of the enemy when is out of the scene of the player---
+        _direction = randomX < BasicWindow.Player.X ? 1 : -1; //not the best way to do it but it works
+        
         //---set the position of the enemy---
         Position = new Vector2(randomX, 250);
         _enemySummoned = true;
@@ -84,17 +91,27 @@ public class Enemy
     /// </summary>
     public void Update()
     {
-        //----get the player position like so they will follow him----
-        var direction = new Vector2(BasicWindow.Player.X - Position.X, 0);
+        //---if the enemy is in the same scene as the player move towards him---
+        if (EnemyScene == Scenes.CurrentScene)
+        {
+            //----get the player position, so they will follow him----
+            var direction = new Vector2(BasicWindow.Player.X - Position.X, 0);
         
-        //----move the enemy towards the player and avoid "disappearing adding 1px of "personal space"----
-        if (!(Math.Abs(direction.X) > 1)) return;
+            //----move the enemy towards the player and avoid "disappearing adding 1px of "personal space"----
+            if (!(Math.Abs(direction.X) > 1)) return;
         
-        direction = Vector2.Normalize(direction);
-        var movement = direction * MovementSpeed;
+            direction = Vector2.Normalize(direction);
+            var movement = direction * MovementSpeed;
         
-        //----update the position of the enemy----
-        Position = new Vector2(Position.X + movement.X, Position.Y);
+            //----update the position of the enemy----
+            Position = new Vector2(Position.X + movement.X,Position.Y);
+        }
+        //---if the enemy is not in the same scene as the player move towards the first player's scene direction---
+        else
+        {
+            var movement = new Vector2(_direction * MovementSpeed, 0);
+            Position = new Vector2(Position.X + movement.X,Position.Y);
+        }
     }
     
     /// <summary>
@@ -112,7 +129,7 @@ public class Enemy
     /// </summary>
     public void Draw()
     {
-        if(IsAlive) DrawRectangleRec(new Rectangle(Position.X, Position.Y, Enemy.Size.Width, Enemy.Size.Height), new Color(0, 100, 0, 255)); // Dark green
+        if(IsAlive && EnemyScene == Scenes.CurrentScene) DrawRectangleRec(new Rectangle(Position.X, Position.Y, Enemy.Size.Width, Enemy.Size.Height), new Color(0, 100, 0, 255)); // Dark green
     }
     
     /*
