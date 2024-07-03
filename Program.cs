@@ -24,8 +24,6 @@ namespace the_hospital
         {
             InitWindow(ScreenWidth, ScreenHeight, "The hospital");
             SetTargetFPS(60); // ⚠ ️the game speed is based on this value ⚠  ️
-            Enemy badGuy = new(100, 1.0f);
-            Enemy badGuy2 = new(100, 1.0f);
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
@@ -36,16 +34,13 @@ namespace the_hospital
                 Player = Scenes.UpdateScene(Player);
                 //---check if the player likes to shoot-------
                 Shooting.HandleShooting(Player);
+                EnemyEngine.SummonEnemy();
                 
-                badGuy.SummonEnemy();
-                badGuy.Update();
-                badGuy2.SummonEnemy();
-                badGuy2.Update();
+                EnemyEngine.Update();
                 
                 //---drawing the game frame-----
                 BeginDrawing();
-                badGuy.Draw();
-                badGuy2.Draw();
+                EnemyEngine.Draw();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
                 DrawRectangleRec(Floor, Raylib_cs.Color.Green);
                 DrawCircleV(Player, 50, Raylib_cs.Color.Maroon);
