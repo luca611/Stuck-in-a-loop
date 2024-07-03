@@ -46,7 +46,7 @@ namespace Stuck_in_a_loop_challange
                 BeginDrawing();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
                 DrawRectangleRec(Floor, Raylib_cs.Color.Green);
-                LightSystem.drawBrake();
+                LightSystem.DrawBrake();
                 EnemyEngine.Draw();
                 Shooting.Draw();
                 DrawCircleV(Player, 50, Color.Maroon);
