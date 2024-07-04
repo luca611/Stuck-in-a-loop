@@ -36,7 +36,7 @@ public static class Movement
     /// update the player movement if pressing any key (right, left, space bar or shift for speed)
     /// </summary>
     /// <returns> <c>Vector2</c> Updated player position</returns>
-    public static Vector2 UpdateMovement()
+    public static Vector2 UpdateMovement(Player player)
     {   
         //----------------x movement--------------------------------
         if (IsKeyDown(KeyboardKey.Right) || IsKeyDown(KeyboardKey.D))
@@ -53,30 +53,33 @@ public static class Movement
         
         
         //----------------y movement--------------------------------
-        if (IsPlayerJumping()) _playerSpeed.Y = -10; // apply leg force (better start training)
+        if (IsPlayerJumping(player)) _playerSpeed.Y = -10; // apply leg force (better start training)
         
         //----------------unwanted forces----------------------------
         _playerSpeed.Y += Gravity; // apply gravity (no space gravity?😰) 
         
         //----------------update player position---------------------
-        BasicWindow.Player += _playerSpeed;
+        player.Position += _playerSpeed;
         
         //----------------basic floor collision----------------------
-        if (!CheckCollisionCircleRec(BasicWindow.Player, 50, BasicWindow.Floor)) return BasicWindow.Player;
-        
+        Console.Write(player.Position.Y);
+        Console.Write(player.Size.Y);
+        Console.Write(" "+BasicWindow.Floor.Y+ "\n");
+        if (!CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y, player.Size.X, player.Size.Y),BasicWindow.Floor)) return player.Position;
+        Console.Write("Player hit the ground\n");;
         _playerSpeed.Y = 0; // Stop vertical velocity
-        BasicWindow.Player.Y = BasicWindow.Floor .Y - 50; // Correct position
+        player.Position = player.Position with { Y = BasicWindow.Floor.Y + player.Size.Y}; // Correct position
 
-        return BasicWindow.Player;
+        return player.Position;
     }
     
     /// <summary>
     /// Check if the player is jumping (pressing the space bar) and if the player is on the floor (no midair jump)
     /// </summary>
     /// <returns><c>bool</c>true if jumping false if not</returns>
-    private static bool IsPlayerJumping()
+    private static bool IsPlayerJumping(Player player)
     {
-        return IsKeyPressed(KeyboardKey.Space) && CheckCollisionCircleRec(BasicWindow.Player, 50, BasicWindow.Floor);
+        return IsKeyPressed(KeyboardKey.Space) && CheckCollisionRecs(player.Size,BasicWindow.Floor);
     }
 }
 

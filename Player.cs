@@ -26,14 +26,12 @@ public class Player
     /// <summary>
     /// <c>Rectangle</c> Size of the player
     /// </summary>
-    public static Rectangle Size { get; } = new Rectangle(0, 0, 50, 100); // All players share the same size
+    public Rectangle Size { get; set; } = new(0, 0, 50, 90); // All players share the same size
     
     /// <summary>
     /// <c>bool</c> Flag to check if the player is alive
     /// </summary>
     public bool IsAlive = true;
-    
-    private int _direction; // Direction of the player
     
     //-----------------------------------CODE--------------------------------------
 
@@ -42,11 +40,41 @@ public class Player
     /// </summary>
     /// <param name="health"><c>int</c> health of the player</param>
     /// <param name="movementSpeed"><c>float</c> speed of the player </param>
-    /// <param name="playerScene"><c>int</c> starting scene of the player</param>
-    public Player( int health, float movementSpeed)
+    /// <param name="startingX"><c>int</c> Starting x position of the player</param>
+    /// <param name="startingY"><c>int</c> Starting Y position of the player</param>
+    public Player( int health, float movementSpeed, int startingX, int startingY)
     {
         Position =  new Vector2 (0, 250);
         Health = health;
         MovementSpeed = movementSpeed;
+        Position = Position with { X = startingX };
+        Position = Position with { Y = startingY };
+    }
+
+    /// <summary>
+    /// Update the player (Movement, scene, shooting)
+    /// </summary>
+    public void UpdatePlayer()
+    {
+        Position = Movement.UpdateMovement(this);
+        Position = Scenes.UpdateScene(Position);
+        Shooting.HandleShooting(Position);
+    }
+    
+    public void GetHit()
+    {
+        Health--;
+        if (Health <= 0)
+        {
+            IsAlive = false;
+        }
+    }
+    
+    /// <summary>
+    /// Draw the player on the screen
+    /// </summary>
+    public void DrawPlayer()
+    {
+        DrawRectangle((int)Position.X, (int)Position.Y, (int)Size.Width, (int)Size.Height,Color.Maroon);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Stuck_in_a_loop_challange;
+﻿using System.Numerics;
+
+namespace Stuck_in_a_loop_challange;
 
 /// <summary>
 /// Class made to manage the enemies system
@@ -26,7 +28,7 @@ public static class EnemyEngine
     /// <summary>
     /// Method to summon an enemy if possible (for now if the max amount of enemies is not reached)
     /// </summary>
-    public static void SummonEnemy()
+    public static void SummonEnemy(Vector2 playerPosition)
     {
         //----can't summon if the max was reached----
         if (ActiveEnemies.Count >= MaxEnemies * Difficulty) return;
@@ -39,14 +41,14 @@ public static class EnemyEngine
             
         //----create the enemy and add it to the list----
         var enemy = new Enemy(health, movementSpeed,scene);
-        enemy.SummonEnemy();
+        enemy.SummonEnemy(playerPosition);
         ActiveEnemies.Add(enemy);
     }
     
     /// <summary>
     /// Update the position of the enemies
     /// </summary>
-    public static void Update()
+    public static void Update(Vector2 playerPosition)
     {
         //---create a copy of the list to avoid concurrent modification---
         var temp = ActiveEnemies.ToArray();
@@ -56,7 +58,7 @@ public static class EnemyEngine
             //----if the enemy is dead remove it from the list----
             //⚠ this condition shouldn't be touched to avoid concurrent modification ⚠ 
             if(enemy.IsAlive == false) ActiveEnemies.Remove(enemy);
-            else enemy.Update();
+            else enemy.Update(playerPosition);
         }
     }
     

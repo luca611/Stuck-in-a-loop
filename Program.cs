@@ -15,28 +15,26 @@ namespace Stuck_in_a_loop_challange
         
         
         //-------the main character------
-        public static Vector2 Player = new((float)ScreenWidth / 2, (float)ScreenHeight / 2);
+        //public static Vector2 Player = new((float)ScreenWidth / 2, (float)ScreenHeight / 2);
         
         public static int Main()
         {
+            //-----main character--------
+            Player mainCharac = new Player(10, 5, ScreenWidth / 2, 0);
             LightSystem lights = new();
             InitWindow(ScreenWidth, ScreenHeight, "The hospital");
-            SetTargetFPS(60); // ⚠ ️the game speed is based on this value ⚠  ️
+            SetTargetFPS(5); // ⚠ ️the game speed is based on this value ⚠  ️
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
                 if (!UiComponents.IsPaused)
                 {
                     DrawText("developing state\nlast addition: basic enemy system", 10, 10, 20, Raylib_cs.Color.White);
-                    //---updating player position---
-                    Player = Movement.UpdateMovement();
-                    //---updating the scene---------
-                    Player = Scenes.UpdateScene(Player);
-                    //---check if the player likes to shoot-------
-                    Shooting.HandleShooting(Player);
+                    //---update the player-----
+                    mainCharac.UpdatePlayer();
                     //---generate and move the enemies-----
-                    EnemyEngine.SummonEnemy();
-                    EnemyEngine.Update();
+                    EnemyEngine.SummonEnemy(mainCharac.Position);
+                    EnemyEngine.Update(mainCharac.Position);
                 }
                 LightSystem.UpdateLightSystem();
                 //---ui Interactions-----
@@ -45,11 +43,12 @@ namespace Stuck_in_a_loop_challange
                 //---drawing the game frame-----
                 BeginDrawing();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
-                DrawRectangleRec(Floor, Raylib_cs.Color.Green);
+                DrawRectangleRec(Floor, Color.Green);
                 LightSystem.DrawBrake();
                 EnemyEngine.Draw();
                 Shooting.Draw();
-                DrawCircleV(Player, 50, Color.Maroon);
+                mainCharac.DrawPlayer();
+                //DrawRectangle((int)Player.X, (int)Player.Y, 50, 100,Color.Maroon);
                 LightSystem.UpdateAndDrawWarningText();
                 LightSystem.DrawLights();
                 //---draw ui components---

@@ -17,9 +17,11 @@ Well this is a challange that me and my friend [MrJoelao](https://github.com/MrJ
 
 ## How to play 🎮
 - **Move:** `A` and `D` or `Left` and `Right` ⌨️
+- **run:** `Shift` 🏃
 - **Jump:** `Space` 🚀
 - **Shoot:** `Left Mouse Button` or `Right Mouse Button` 🔫
-- **Pause:** `P` (not implemented yet)
+- **Pause:** `P` ⏸️
+- **Brake:** `b` 💡
 
 ---
 
@@ -28,4 +30,6 @@ Well this is a challange that me and my friend [MrJoelao](https://github.com/MrJ
 
 - **📅 `Day 2`:** organising the workspace (it was a mess). Added shooting and bullet loop physic (they have gravity!!). Added a basic enemy that follows you.
 
-- **📅 `Day 3`:** added a basic enemy system (they spawn in random places and follow you). Now enemies can die if shooted!
+- **📅 `Day 3`:** added a basic enemy system (they spawn in random places and follow you). Now enemies can die if shooted!, also added a basic Ui.
+
+- **📅 `Day 4`:** added the player class (don't judge me I forgot to do it before). 

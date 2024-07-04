@@ -63,7 +63,7 @@ public class Enemy
     /// <summary>
     /// Spawns the enemy at a random position
     /// </summary>
-    public void SummonEnemy()
+    public void SummonEnemy(Vector2 playerPosition)
     {
         //---check if the enemy is already summoned---
         if (_enemySummoned) return;
@@ -72,14 +72,14 @@ public class Enemy
         var random = new Random();
         float randomX = random.Next(0, BasicWindow.ScreenWidth);
         
-        if (Math.Abs(randomX - BasicWindow.Player.X) < 100)
+        if (Math.Abs(randomX - playerPosition.X) < 100)
         {
-            randomX += 100 * (randomX < BasicWindow.Player.X ? -1 : 1);
+            randomX += 100 * (randomX < playerPosition.X ? -1 : 1);
             randomX = Math.Clamp(randomX, 0, BasicWindow.ScreenWidth - Enemy.Size.Width);
         }
         
         //---set the direction of the enemy when is out of the scene of the player---
-        _direction = randomX < BasicWindow.Player.X ? 1 : -1; //not the best way to do it but it works
+        _direction = randomX < playerPosition.X ? 1 : -1; //not the best way to do it but it works
         
         //---set the position of the enemy---
         Position = new Vector2(randomX, 250);
@@ -89,13 +89,13 @@ public class Enemy
     /// <summary>
     /// Update the enemy position
     /// </summary>
-    public void Update()
+    public void Update(Vector2 playerPosition)
     {
         //---if the enemy is in the same scene as the player move towards him---
         if (EnemyScene == Scenes.CurrentScene)
         {
             //----get the player position, so they will follow him----
-            var direction = new Vector2(BasicWindow.Player.X - Position.X, 0);
+            var direction = new Vector2(playerPosition.X - Position.X, 0);
         
             //----move the enemy towards the player and avoid "disappearing adding 1px of "personal space"----
             if (!(Math.Abs(direction.X) > 1)) return;
