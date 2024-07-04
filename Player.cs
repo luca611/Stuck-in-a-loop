@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-
 namespace Stuck_in_a_loop_challange;
 
 public class Player
@@ -34,6 +33,10 @@ public class Player
     public bool IsAlive = true;
     
     private float _immunityTimeLeft; // Immunity time left in seconds
+
+    private Texture2D _playerTexture;
+
+    private Image image;
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -51,6 +54,7 @@ public class Player
         MovementSpeed = movementSpeed;
         Position = Position with { X = startingX };
         Position = Position with { Y = startingY };
+        _playerTexture = LoadTexture("./IdleR.png");
     }
 
     /// <summary>
@@ -104,7 +108,11 @@ public class Player
     /// </summary>
     public void DrawPlayer()
     {
-        DrawRectangle((int)Position.X, (int)Position.Y, (int)Size.Width, (int)Size.Height,Color.Maroon);
+        
+        UnloadImage(image);
+        // Draw the image at the player's position
+        DrawTexture(_playerTexture, (int)Position.X, (int)Position.Y, Color.White);
+
         DrawHeath();
     }
 }

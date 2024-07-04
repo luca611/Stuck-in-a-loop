@@ -11,4 +11,18 @@
       <PackageReference Include="Raylib-cs" Version="6.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="resources\Player\" />
+      <Folder Include="src\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="IdleR.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="UIdle_LProtagonist.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

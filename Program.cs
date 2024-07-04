@@ -20,8 +20,9 @@ namespace Stuck_in_a_loop_challange
         {
             new LightSystem();
             //-----main character--------
-            Player mainCharac = new Player(10, 5, ScreenWidth / 2, 0);
             InitWindow(ScreenWidth, ScreenHeight, "The hospital");
+            
+            Player mainCharac = new Player(10, 5, ScreenWidth / 2, 0);
             SetTargetFPS(60); // ⚠ ️the game speed is based on this value ⚠  ️
             //--------actual game loop-------
             while (!WindowShouldClose())
