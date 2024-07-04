@@ -73,7 +73,7 @@ public static class EnemyEngine
     /// </summary>
     public static void Draw()
     {
-        for(int i = ActiveEnemies.Count - 1; i >= 0; i--)
+        for(var i = ActiveEnemies.Count - 1; i >= 0; i--)
         {
             ActiveEnemies[i] = Scenes.UpdateEnemyPosition(ActiveEnemies[i]);
             ActiveEnemies[i].Draw();

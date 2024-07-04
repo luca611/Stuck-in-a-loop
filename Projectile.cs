@@ -65,7 +65,7 @@ namespace Stuck_in_a_loop_challange
         /// <returns><c>bool</c> true if the projectile should be removed false if not</returns>
         public bool Update()
         {
-            if(UiComponents.IsPaused) return false; // Don't update if the game is paused (to avoid the projectile moving while the game is pausedaaaaa
+            if(UiComponents.IsPaused) return false; // Don't update if the game is paused (to avoid the projectile moving while the game is paused
             //--update the position of the projectile--
             Position += Speed;
             DistanceTravelled += Speed.Length();

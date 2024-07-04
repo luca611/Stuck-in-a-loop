@@ -26,6 +26,7 @@ namespace Stuck_in_a_loop_challange
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
+                PropSystem.InitProps();
                 if (!UiComponents.IsPaused)
                 {
                     DrawText("developing state\nlast addition: Light system", 10, 10, 20, Color.White);
@@ -43,6 +44,7 @@ namespace Stuck_in_a_loop_challange
                 BeginDrawing();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
                 DrawRectangleRec(Floor, Color.Green);
+                PropSystem.DrawProps();
                 LightSystem.DrawBrake();
                 EnemyEngine.Draw();
                 Shooting.Draw();

@@ -16,7 +16,7 @@ public class Player
     /// <summary>
     /// <c>float</c> Movement speed of the player
     /// </summary>
-    private float MovementSpeed { get; }
+    private float MovementSpeed { get; set; }
     
     /// <summary>
     /// <c>Vector2</c> Position of the player
@@ -88,13 +88,13 @@ public class Player
     /// </summary>
     private void DrawHeath()
     {
-        string healthText = $"Health: {Health}";
-        int fontSize = 20; 
-        int paddingRight = 10; 
-        int paddingTop = 10; 
-        int textWidth = MeasureText(healthText, fontSize);
-        int textX = BasicWindow.ScreenWidth - textWidth - paddingRight;
-        int textY = paddingTop;
+        var healthText = $"Health: {Health}";
+        var fontSize = 20; 
+        var paddingRight = 10; 
+        var paddingTop = 10; 
+        var textWidth = MeasureText(healthText, fontSize);
+        var textX = BasicWindow.ScreenWidth - textWidth - paddingRight;
+        var textY = paddingTop;
 
         DrawText(healthText, textX, textY, fontSize, Color.White);
     }

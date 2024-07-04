@@ -32,4 +32,4 @@ Well this is a challange that me and my friend [MrJoelao](https://github.com/MrJ
 
 - **📅 `Day 3`:** added a basic enemy system (they spawn in random places and follow you). Now enemies can die if shooted!, also added a basic Ui.
 
-- **📅 `Day 4`:** added the player class (don't judge me I forgot to do it before). 
+- **📅 `Day 4`:** added the player class (don't judge me I forgot to do it before). Added prop generator (it generates random props in the map). Added Game Over screen. **The player can now die.**
