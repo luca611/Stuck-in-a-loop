@@ -36,7 +36,11 @@ public static class EnemyEngine
         //----randomize the health and speed of the enemy based on the diff.----
         var random = new Random();
         var health = random.Next(1, 1+Difficulty);
-        var scene = random.Next(0, Scenes.SceneList.Length); 
+        var scene = random.Next(0, Scenes.SceneList.Length);
+        while (scene == Scenes.CurrentScene)
+        {
+            scene = random.Next(0, Scenes.SceneList.Length); // Generate a new scene index
+        }
         float movementSpeed = random.Next(1, Difficulty);
             
         //----create the enemy and add it to the list----
@@ -48,17 +52,19 @@ public static class EnemyEngine
     /// <summary>
     /// Update the position of the enemies
     /// </summary>
-    public static void Update(Vector2 playerPosition)
+    public static void Update(Player player)
     {
         //---create a copy of the list to avoid concurrent modification---
         var temp = ActiveEnemies.ToArray();
         //----update the enemies----
         foreach (Enemy enemy in temp)
         {
+            //----if the enemy hits the player----
+            enemy.HitPlayer(player);
             //----if the enemy is dead remove it from the list----
             //⚠ this condition shouldn't be touched to avoid concurrent modification ⚠ 
             if(enemy.IsAlive == false) ActiveEnemies.Remove(enemy);
-            else enemy.Update(playerPosition);
+            else enemy.Update(player.Position);
         }
     }
     

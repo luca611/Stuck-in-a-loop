@@ -62,13 +62,10 @@ public static class Movement
         player.Position += _playerSpeed;
         
         //----------------basic floor collision----------------------
-        Console.Write(player.Position.Y);
-        Console.Write(player.Size.Y);
-        Console.Write(" "+BasicWindow.Floor.Y+ "\n");
-        if (!CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y, player.Size.X, player.Size.Y),BasicWindow.Floor)) return player.Position;
-        Console.Write("Player hit the ground\n");;
+        if (!CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y, 
+                player.Size.X, player.Size.Y),BasicWindow.Floor)) return player.Position;
         _playerSpeed.Y = 0; // Stop vertical velocity
-        player.Position = player.Position with { Y = BasicWindow.Floor.Y + player.Size.Y}; // Correct position
+        player.Position = player.Position with { Y = BasicWindow.Floor.Y-player.Size.Y}; 
 
         return player.Position;
     }
@@ -79,7 +76,8 @@ public static class Movement
     /// <returns><c>bool</c>true if jumping false if not</returns>
     private static bool IsPlayerJumping(Player player)
     {
-        return IsKeyPressed(KeyboardKey.Space) && CheckCollisionRecs(player.Size,BasicWindow.Floor);
+        return IsKeyPressed(KeyboardKey.Space) && CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y+(player.Size.Y/2), 
+            player.Size.X, player.Size.Y),BasicWindow.Floor);
     }
 }
 

@@ -33,6 +33,7 @@ public class Player
     /// </summary>
     public bool IsAlive = true;
     
+    private float _immunityTimeLeft; // Immunity time left in seconds
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -44,7 +45,8 @@ public class Player
     /// <param name="startingY"><c>int</c> Starting Y position of the player</param>
     public Player( int health, float movementSpeed, int startingX, int startingY)
     {
-        Position =  new Vector2 (0, 250);
+        Size = Size with { X = 50 };
+        Size = Size with { Y = 90 };
         Health = health;
         MovementSpeed = movementSpeed;
         Position = Position with { X = startingX };
@@ -56,18 +58,45 @@ public class Player
     /// </summary>
     public void UpdatePlayer()
     {
+        if (_immunityTimeLeft > 0)
+        {
+            _immunityTimeLeft -= GetFrameTime(); // Decrease immunity time by the frame time
+        }
+        
         Position = Movement.UpdateMovement(this);
         Position = Scenes.UpdateScene(Position);
         Shooting.HandleShooting(Position);
     }
     
+    /// <summary>
+    /// Method to handle player damaging
+    /// </summary>
     public void GetHit()
     {
+        if (!(_immunityTimeLeft <= 0)) return; // Check if the player is immune
+        
         Health--;
-        if (Health <= 0)
-        {
-            IsAlive = false;
-        }
+        _immunityTimeLeft = 5; // Set immunity time to 5 seconds
+        if (Health > 0) return;// Check if the player is still alive
+        
+        IsAlive = false;
+        UiComponents.ToggleGameOver();
+    }
+    
+    /// <summary>
+    /// method to draw the player health
+    /// </summary>
+    private void DrawHeath()
+    {
+        string healthText = $"Health: {Health}";
+        int fontSize = 20; 
+        int paddingRight = 10; 
+        int paddingTop = 10; 
+        int textWidth = MeasureText(healthText, fontSize);
+        int textX = BasicWindow.ScreenWidth - textWidth - paddingRight;
+        int textY = paddingTop;
+
+        DrawText(healthText, textX, textY, fontSize, Color.White);
     }
     
     /// <summary>
@@ -76,5 +105,6 @@ public class Player
     public void DrawPlayer()
     {
         DrawRectangle((int)Position.X, (int)Position.Y, (int)Size.Width, (int)Size.Height,Color.Maroon);
+        DrawHeath();
     }
 }

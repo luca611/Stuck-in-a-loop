@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Raylib_cs;
+﻿using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange
@@ -19,22 +18,22 @@ namespace Stuck_in_a_loop_challange
         
         public static int Main()
         {
+            new LightSystem();
             //-----main character--------
             Player mainCharac = new Player(10, 5, ScreenWidth / 2, 0);
-            LightSystem lights = new();
             InitWindow(ScreenWidth, ScreenHeight, "The hospital");
-            SetTargetFPS(5); // ⚠ ️the game speed is based on this value ⚠  ️
+            SetTargetFPS(60); // ⚠ ️the game speed is based on this value ⚠  ️
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
                 if (!UiComponents.IsPaused)
                 {
-                    DrawText("developing state\nlast addition: basic enemy system", 10, 10, 20, Raylib_cs.Color.White);
+                    DrawText("developing state\nlast addition: Light system", 10, 10, 20, Color.White);
                     //---update the player-----
                     mainCharac.UpdatePlayer();
                     //---generate and move the enemies-----
                     EnemyEngine.SummonEnemy(mainCharac.Position);
-                    EnemyEngine.Update(mainCharac.Position);
+                    EnemyEngine.Update(mainCharac);
                 }
                 LightSystem.UpdateLightSystem();
                 //---ui Interactions-----
@@ -52,7 +51,7 @@ namespace Stuck_in_a_loop_challange
                 LightSystem.UpdateAndDrawWarningText();
                 LightSystem.DrawLights();
                 //---draw ui components---
-                UiComponents.DrawPauseMenu();
+                UiComponents.DrawUiComponents();
                 EndDrawing();
             }
 

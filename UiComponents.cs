@@ -14,19 +14,21 @@ public static class UiComponents
     /// </summary>
     public static bool IsPaused;
     
+    public static bool isGameOver;
+    
     //-----------------------------------CODE--------------------------------------
     /// <summary>
     /// Method to toggle the pause of the game
     /// </summary>
     public static void TogglePause()
     {
-        if(IsKeyPressed(KeyboardKey.P)) IsPaused = !IsPaused;
+        if(IsKeyPressed(KeyboardKey.P) && !isGameOver) IsPaused = !IsPaused;
     }
     
     /// <summary>
     /// Draw the pause menu of the game
     /// </summary>
-    public static void DrawPauseMenu()
+    private static void DrawPauseMenu()
     {
         if(IsPaused)
         {
@@ -34,4 +36,38 @@ public static class UiComponents
             DrawText("PAUSED", GetScreenWidth() / 2 - MeasureText("PAUSED", 40) / 2, GetScreenHeight() / 2 - 20, 40, Color.White);
         }
     }
+    
+    /// <summary>
+    /// Method to toggle the game over
+    /// </summary>
+    public static void ToggleGameOver()
+    {
+        isGameOver = true;
+    }
+    /// <summary>
+    /// Draw the game over screen
+    /// </summary>
+    private static void DrawGameOver()
+    {
+        if(isGameOver)
+        {
+            IsPaused = true;
+            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(Color.Black, 0.5f));
+            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 2 - 20, 40, Color.White);
+        }
+    }
+    
+    /// <summary>
+    /// method to draw all the UI components
+    /// </summary>
+    public static void DrawUiComponents()
+    {
+        if (isGameOver)
+        {
+            DrawGameOver();
+            return;
+        }
+        DrawPauseMenu();
+    }
+    
 }

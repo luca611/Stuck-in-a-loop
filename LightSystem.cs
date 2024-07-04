@@ -115,7 +115,7 @@ public class LightSystem
     public static void DrawLights()
     {
         if (_isBrakeOn) return;//if the brake is on don't draw the lights
-        Color overlayColor = new Color(80, 80, 80, 150);
+        Color overlayColor = new Color(0, 0, 0, 150);
         DrawRectangle(0, 0, BasicWindow.ScreenWidth, BasicWindow.ScreenHeight, overlayColor);
     }
     

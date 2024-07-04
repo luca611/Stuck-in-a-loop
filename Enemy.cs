@@ -78,9 +78,6 @@ public class Enemy
             randomX = Math.Clamp(randomX, 0, BasicWindow.ScreenWidth - Enemy.Size.Width);
         }
         
-        //---set the direction of the enemy when is out of the scene of the player---
-        _direction = randomX < playerPosition.X ? 1 : -1; //not the best way to do it but it works
-        
         //---set the position of the enemy---
         Position = new Vector2(randomX, 250);
         _enemySummoned = true;
@@ -109,6 +106,9 @@ public class Enemy
         //---if the enemy is not in the same scene as the player move towards the first player's scene direction---
         else
         {
+            if(EnemyScene<Scenes.CurrentScene || EnemyScene == Scenes.SceneList.Length) _direction = 1;
+            else _direction = -1;
+            
             var movement = new Vector2(_direction * MovementSpeed, 0);
             Position = new Vector2(Position.X + movement.X,Position.Y);
         }
@@ -132,8 +132,21 @@ public class Enemy
         if(IsAlive && EnemyScene == Scenes.CurrentScene) DrawRectangleRec(new Rectangle(Position.X, Position.Y, Enemy.Size.Width, Enemy.Size.Height), new Color(0, 100, 0, 255)); // Dark green
     }
     
-    /*
-     * #TODO: Add a method to check if the enemy is hitting the player and update the player health (in case despawn the player)
-     */
+    /// <summary>
+    /// method to check if the enemy has hit the player and apply the damage if so
+    /// </summary>
+    /// <param name="player"></param>
+    public void HitPlayer(Player player)
+    {
+        //---check if the player is in the same scene as the enemy---
+        if (EnemyScene == Scenes.CurrentScene)
+        {
+            //---check if the player is hit---
+            if (CheckCollisionRecs(new Rectangle((int)Position.X, (int)Position.Y, (int)Enemy.Size.Width, (int)Enemy.Size.Height), new Rectangle((int)player.Position.X, (int)player.Position.Y, (int)player.Size.Width, (int)player.Size.Height)))
+            {
+                player.GetHit();
+            }
+        }
+    }
     
 }
