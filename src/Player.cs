@@ -36,8 +36,10 @@ public class Player
 
     public Texture2D PlayerTexture;
     
-    private static int shootingFrames = 0;
-    private const int ShootingDuration = 120; // Duration in frames
+    private static int _frames = 0;
+    private const int ShootingDuration = 45; // Duration in frames
+    private const int WalkingFrames = 30;
+    private const int RunningFrames = 15;
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -67,34 +69,66 @@ public class Player
         {
             _immunityTimeLeft -= GetFrameTime(); // Decrease immunity time by the frame time
         }
-
-        if (Shooting.IsShooting)
-        {
-            shootingFrames++;
-            
-            
-            if (shootingFrames <30)
-            {
-                PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingRF.png" : "./resources/Player/ShootingLF.png");
-            }
-            else
-            {
-                PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingR.png" : "./resources/Player/ShootingL.png");
-            }
-            if (shootingFrames >= ShootingDuration)
-            {
-                Shooting.IsShooting = false;
-                shootingFrames = 0;
-            }
-        }
-        else
-        {
-            PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
-        }
+        
+        //---update the player animations---
+        if (Shooting.IsShooting) UpdateShootingAnimation();
+        else if(Movement.IsRunning) UpdateRunningAnimation();
+        else if(Movement.IsWalking) UpdateWalkingAnimation();
+        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        
 
         Position = Movement.UpdateMovement(this);
         Position = Scenes.UpdateScene(Position);
         Shooting.HandleShooting(this);
+    }
+    
+    /// <summary>
+    /// Updates the shooting animation
+    /// </summary>
+    private void UpdateShootingAnimation()
+    {
+        //--player might shoot multiple times in a row, so I need to reset the frames counter--
+        if(Shooting.ShotReset)
+        {
+            _frames = 0;
+            Shooting.ShotReset = false;
+        }
+        
+        _frames++;
+        if (_frames <30) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingRF.png" : "./resources/Player/ShootingLF.png");
+        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingR.png" : "./resources/Player/ShootingL.png");
+
+        if (_frames < ShootingDuration) return; // Check if the shooting animation is over
+        
+        Shooting.IsShooting = false;
+        _frames = 0;
+    }
+    
+    /// <summary>
+    /// Updates the running animation
+    /// </summary>
+    private void UpdateRunningAnimation()
+    {
+        if (!Movement.IsRunning) return;
+        
+        _frames++;
+        if (_frames < RunningFrames/2) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/RunningR.png" : "./resources/Player/RunningL.png");
+        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        if (_frames >= RunningFrames) _frames = 0;
+    }
+    
+    /// <summary>
+    /// Updates the walking animation 
+    /// </summary>
+    private void UpdateWalkingAnimation()
+    {
+        if (!Movement.IsWalking) return;
+        
+        _frames++;
+        if (_frames < WalkingFrames/2) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/runningR.png" : "./resources/Player/RunningL.png");
+        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+            
+        if (_frames >= WalkingFrames) _frames = 0;
     }
     
     /// <summary>

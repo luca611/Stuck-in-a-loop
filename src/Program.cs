@@ -37,7 +37,7 @@ namespace Stuck_in_a_loop_challange
                     EnemyEngine.SummonEnemy(mainCharac.Position);
                     EnemyEngine.Update(mainCharac);
                 }
-                LightSystem.UpdateLightSystem();
+                LightSystem.UpdateLightSystem(mainCharac);
                 //---ui Interactions-----
                 UiComponents.TogglePause();
                 

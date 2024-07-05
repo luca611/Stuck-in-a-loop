@@ -38,14 +38,22 @@ public static class Shooting
     /// <summary>
     /// <c>const</c> <c>double</c> Delay between shots in seconds
     /// </summary>
-    private const double ShotDelay = 0.35;
+    private const double ShotDelay = 0.25;
 
     /// <summary>
     /// <c>int</c> Ammo count
     /// </summary>
-    private static int _ammo = 10;
+    private static int _ammo = 15;
 
+    /// <summary>
+    /// <c>bool</c> Flag to check if the player is shooting
+    /// </summary>
     public static bool IsShooting;
+
+    /// <summary>
+    /// <c>bool</c> Flag to check if the player has shot again
+    /// </summary>
+    public static bool ShotReset;
 
     //-----------------------------------CODE--------------------------------------
 
@@ -55,9 +63,7 @@ public static class Shooting
     /// <param name="player"><c>Vector2</c> player (it only uses its position)</param>
     public static void HandleShooting(Player player)
     {
-        if (!IsPlayerShooting() || !(GetTime() - _lastShotTime >= ShotDelay)) return;
-        IsShooting = true;
-        Console.Write("Shooting\n:" + IsShooting);
+        if (!IsPlayerShooting() || !(GetTime() - _lastShotTime >= ShotDelay) || Movement.IsJumping) return; //no shooting midair
         Shoot(player.Position);
         _lastShotTime = GetTime();
     }
@@ -79,6 +85,8 @@ public static class Shooting
     {
         //---update the ammo count---
         if (_ammo == 0) return; // no ammo? no shoot :( 
+        IsShooting = true;
+        ShotReset = true;
         _ammo--; // Decrease ammo count (remove = inf ammo)
 
         //----giving the direction to the projectile----
@@ -86,7 +94,7 @@ public static class Shooting
 
         //---for now all the projectile has the same size but if I'll add gun more I'll change this---
         var projectileSize = new Rectangle(player.X, player.Y, 5, 5);
-        ActiveProjectiles.Add(new Projectile(new Vector2(player.X, player.Y+45), projectileSpeed, projectileSize, 200));
+        ActiveProjectiles.Add(new Projectile(new Vector2(player.X, player.Y+57), projectileSpeed, projectileSize, 200));
     }
 
     /// <summary>

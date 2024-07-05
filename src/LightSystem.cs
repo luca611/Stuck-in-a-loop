@@ -70,14 +70,19 @@ public class LightSystem
     /// <summary>
     /// Method to check if the brake is turned on
     /// </summary>
-    private static void checkTunOn()
+    private static void checkTurnOn(Player player)
     {
-        //---if the brake is already on or the key is not pressed return---
-        if (!IsKeyPressed(KeyboardKey.B) || _isBrakeOn) return; 
-        //--reset variables--
+        // Calculate the distance to the player
+        var distanceToPlayer = Vector2.Distance(_position, player.Position);
+    
+        // Check if the brake is already on, the key is not pressed, the player is not within 50 pixels, or not in the same scene
+        if (!IsKeyPressed(KeyboardKey.B) || _isBrakeOn || distanceToPlayer > 50 || Scenes.CurrentScene != _brakeScene) return;
+    
+        // Reset variables
         _lastToggleTime = GetTime();
         _isBrakeOn = true;
-        //---reset the difficulty---
+    
+        // Reset the difficulty
         EnemyEngine.Difficulty = 1;
     }
     
@@ -94,10 +99,10 @@ public class LightSystem
     /// <summary>
     /// Method to update the light system
     /// </summary>
-    public static void UpdateLightSystem()
+    public static void UpdateLightSystem(Player player)
     {
         ToggleBrake();
-        checkTunOn();
+        checkTurnOn(player);
         if (!_isBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 1000);
     }
     

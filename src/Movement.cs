@@ -25,6 +25,11 @@ public static class Movement
     /// </summary>
     public static int Direction;
     
+    public static bool IsJumping;
+    
+    public static bool IsRunning;
+    
+    public static bool IsWalking;
     //-----------------------------------CODE--------------------------------------
     /*
      
@@ -37,20 +42,27 @@ public static class Movement
     /// </summary>
     /// <returns> <c>Vector2</c> Updated player position</returns>
     public static Vector2 UpdateMovement(Player player)
-    {   
+    {
+        if (Shooting.IsShooting) return player.Position;
+        //--reset flags--
+        IsRunning = false;
+        IsWalking = false;
         //----------------x movement--------------------------------
         if (IsKeyDown(KeyboardKey.Right) || IsKeyDown(KeyboardKey.D))
         {
+            IsWalking = true;
             Direction = 0;
-            _playerSpeed.X = IsKeyDown(KeyboardKey.LeftShift) ? +6.0f : +4.0f;
+            IsRunning = IsKeyDown(KeyboardKey.LeftShift);
+            _playerSpeed.X = IsRunning ? +6.0f : +4.0f;
         }
         else if(IsKeyDown(KeyboardKey.Left) || IsKeyDown(KeyboardKey.A))
         {
+            IsWalking = true;
             Direction = 1;
-            _playerSpeed.X = IsKeyDown(KeyboardKey.LeftShift) ? -6.0f : -4.0f;
+            IsRunning = IsKeyDown(KeyboardKey.LeftShift);
+            _playerSpeed.X = IsRunning ? -6.0f: -4.0f;
         }
         else _playerSpeed.X = 0;
-        
         
         //----------------y movement--------------------------------
         if (IsPlayerJumping(player)) _playerSpeed.Y = -10; // apply leg force (better start training)
@@ -64,6 +76,7 @@ public static class Movement
         //----------------basic floor collision----------------------
         if (!CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y, 
                 player.Size.X, player.Size.Y),BasicWindow.Floor)) return player.Position;
+        IsJumping = false;
         _playerSpeed.Y = 0; // Stop vertical velocity
         player.Position = player.Position with { Y = BasicWindow.Floor.Y-player.Size.Y}; 
 
@@ -76,8 +89,11 @@ public static class Movement
     /// <returns><c>bool</c>true if jumping false if not</returns>
     private static bool IsPlayerJumping(Player player)
     {
-        return IsKeyPressed(KeyboardKey.Space) && CheckCollisionRecs(new Rectangle(player.Position.X, player.Position.Y+(player.Size.Y/2), 
-            player.Size.X, player.Size.Y),BasicWindow.Floor);
+        if (!IsKeyPressed(KeyboardKey.Space) || CheckCollisionRecs(new Rectangle(player.Position.X,
+                player.Position.Y + (player.Size.Y / 2),
+                player.Size.X, player.Size.Y), BasicWindow.Floor) != true) return false;
+        IsJumping = true;
+        return true;
     }
 }
 
