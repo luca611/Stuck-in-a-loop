@@ -70,7 +70,7 @@ public class LightSystem
     /// <summary>
     /// Method to check if the brake is turned on
     /// </summary>
-    public static void checkTunOn()
+    private static void checkTunOn()
     {
         //---if the brake is already on or the key is not pressed return---
         if (!IsKeyPressed(KeyboardKey.B) || _isBrakeOn) return; 
@@ -98,7 +98,7 @@ public class LightSystem
     {
         ToggleBrake();
         checkTunOn();
-        if (!_isBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 5);
+        if (!_isBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 1000);
     }
     
     /// <summary>
@@ -115,7 +115,7 @@ public class LightSystem
     public static void DrawLights()
     {
         if (_isBrakeOn) return;//if the brake is on don't draw the lights
-        Color overlayColor = new Color(0, 0, 0, 150);
+        var overlayColor = new Color(0, 0, 0, 150);
         DrawRectangle(0, 0, BasicWindow.ScreenWidth, BasicWindow.ScreenHeight, overlayColor);
     }
     
