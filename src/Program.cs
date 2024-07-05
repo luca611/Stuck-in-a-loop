@@ -12,10 +12,6 @@ namespace Stuck_in_a_loop_challange
         //-------the floor---
         public static Rectangle Floor = new(0, ScreenHeight - 100, ScreenWidth, 100);
         
-        
-        //-------the main character------
-        //public static Vector2 Player = new((float)ScreenWidth / 2, (float)ScreenHeight / 2);
-        
         public static int Main()
         {
             new LightSystem();

@@ -55,9 +55,10 @@ public class LightSystem
     /// <c>const</c> <c>double</c> Interval between toggling the warning text
     /// </summary>
     private static double _toggleInterval = 0.5; // Blink every 0.5 seconds
-
-    //-----------------------------------CODE--------------------------------------
     
+    //-----------------------------------CODE--------------------------------------
+
+
     /// <summary>
     /// Constructor of the light system
     /// </summary>
@@ -111,7 +112,8 @@ public class LightSystem
     /// </summary>
     public static void DrawBrake()
     {
-        if (_brakeScene == Scenes.CurrentScene) DrawRectangle((int)_position.X, (int)_position.Y, 50, 50, Color.Gold);
+        if (_brakeScene != Scenes.CurrentScene) return;
+        DrawTexture(IsBrakeOn ? PropSystem.BrakeOn : PropSystem.BrakeOff, (int)_position.X, (int)_position.Y, Color.White);
     }
     
     /// <summary>

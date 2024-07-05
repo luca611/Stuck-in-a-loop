@@ -53,9 +53,7 @@ public static class PropSystem
     /// <c>Prop[]</c> Array of chairs
     /// </summary>
     private static readonly Prop[] Chairs = new Prop[MaxChairs];
-    
-    private static Texture2D _currentlightTexture;
-    
+
     //--------------------------------RESOURCES-------------------------------------
     
     private static Texture2D _chairTexture = LoadTexture("./resources/Props/chair.png");
@@ -63,6 +61,8 @@ public static class PropSystem
     private static Texture2D _vineTexture = LoadTexture("./resources/Props/vine.png");
     public static Texture2D LightOffTexture = LoadTexture("./resources/Props/light.png");
     public static Texture2D LightOnTexture = LoadTexture("./resources/Props/lightOn.png");
+    public static Texture2D BrakeOn= LoadTexture("./resources/Props/brakeOn.png");
+    public static Texture2D BrakeOff=LoadTexture("./resources/Props/brakeOff.png");
     
     //-----------------------------------CODE--------------------------------------
     
@@ -100,14 +100,13 @@ public static class PropSystem
     {
         //---random generator---
         var random = new Random();
-        var doorColor = Color.Pink; //will be replaced with the texture
 
         for (var i = 0; i < MaxDoors; i++)
         {
             var randomX = random.Next(0, BasicWindow.ScreenWidth); // Random X-coordinate
             var scene = random.Next(0, Scenes.SceneList.Length); // Random scene
             //---create the door---
-            Doors[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-130), _doorTexture, scene, false);
+            Doors[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-150), _doorTexture, scene, false);
         }
     }
     
@@ -126,7 +125,6 @@ public static class PropSystem
     {
         //---random generator---
         var random = new Random();
-        var lightColor = Color.Yellow; //will be replaced with the texture
 
         for (var i = 0; i < MaxLights; i++)
         {
@@ -152,7 +150,6 @@ public static class PropSystem
     {
         //---random generator---
         var random = new Random();
-        var vineColor = Color.DarkGreen; //will be replaced with the texture
 
         for (var i = 0; i < MaxVines; i++)
         {
@@ -178,7 +175,6 @@ public static class PropSystem
     {
         //---random generator---
         var random = new Random();
-        var chairColor = Color.DarkBrown; //will be replaced with the texture
 
         for (var i = 0; i < MaxChairs; i++)
         {

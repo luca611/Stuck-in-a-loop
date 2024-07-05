@@ -30,4 +30,14 @@ public class Prop(Vector2 position, Texture2D texture, int scene, bool IsLight)
         if(LightSystem.IsBrakeOn)  DrawTexture(PropSystem.LightOnTexture, (int)position.X, (int)position.Y, Color.White);
         else DrawTexture(PropSystem.LightOffTexture, (int)position.X, (int)position.Y, Color.White);
     }
+
+    public Vector2 GetPos()
+    {
+        return position;
+    }
+    
+    public int GetScene()
+    {
+        return scene;
+    }
 }
