@@ -82,7 +82,7 @@ public static class Shooting
 
         //---for now all the projectile has the same size but if I'll add gun more I'll change this---
         var projectileSize = new Rectangle(player.X, player.Y, 5, 5);
-        ActiveProjectiles.Add(new Projectile(player, projectileSpeed, projectileSize, 200));
+        ActiveProjectiles.Add(new Projectile(new Vector2(player.X, player.Y+45), projectileSpeed, projectileSize, 200));
     }
 
     /// <summary>
