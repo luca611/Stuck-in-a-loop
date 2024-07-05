@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using Raylib_cs;
-
+using static Raylib_cs.Raylib;
 namespace Stuck_in_a_loop_challange;
 
 /// <summary>
@@ -22,7 +22,7 @@ public static class PropSystem
     /// <summary>
     /// <c>int</c> Max number of lights
     /// </summary>
-    private const int MaxLights = 4;
+    private const int MaxLights = 8;
     
     /// <summary>
     /// <c>int</c> Max number of veins
@@ -53,6 +53,16 @@ public static class PropSystem
     /// <c>Prop[]</c> Array of chairs
     /// </summary>
     private static readonly Prop[] Chairs = new Prop[MaxChairs];
+    
+    private static Texture2D _currentlightTexture;
+    
+    //--------------------------------RESOURCES-------------------------------------
+    
+    private static Texture2D _chairTexture = LoadTexture("./resources/Props/chair.png");
+    private static Texture2D _doorTexture = LoadTexture("./resources/Props/door.png");
+    private static Texture2D _vineTexture = LoadTexture("./resources/Props/vine.png");
+    public static Texture2D LightOffTexture = LoadTexture("./resources/Props/light.png");
+    public static Texture2D LightOnTexture = LoadTexture("./resources/Props/lightOn.png");
     
     //-----------------------------------CODE--------------------------------------
     
@@ -97,7 +107,7 @@ public static class PropSystem
             var randomX = random.Next(0, BasicWindow.ScreenWidth); // Random X-coordinate
             var scene = random.Next(0, Scenes.SceneList.Length); // Random scene
             //---create the door---
-            Doors[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-130), new Vector2(60, 130), doorColor, scene);
+            Doors[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-130), _doorTexture, scene, false);
         }
     }
     
@@ -123,7 +133,7 @@ public static class PropSystem
             var randomX = random.Next(0, BasicWindow.ScreenWidth); // Random X-coordinate
             var scene = random.Next(0, Scenes.SceneList.Length); // Random scene
             //---create the light---
-            Lights[i] = new Prop(new Vector2(randomX, 40), new Vector2(100, 30), lightColor, scene);
+            Lights[i] = new Prop(new Vector2(randomX, 40), LightOnTexture , scene, true);
         }
     }
     
@@ -149,7 +159,7 @@ public static class PropSystem
             var randomX = random.Next(0, BasicWindow.ScreenWidth); // Random X-coordinate
             var scene = random.Next(0, Scenes.SceneList.Length); // Random scene
             //---create the vine---
-            Vines[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-60), new Vector2(30, 30), vineColor, scene);
+            Vines[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-60), _vineTexture, scene,false);
         }
     }
 
@@ -175,7 +185,7 @@ public static class PropSystem
             var randomX = random.Next(0, BasicWindow.ScreenWidth); // Random X-coordinate
             var scene = random.Next(0, Scenes.SceneList.Length); // Random scene
             //---create the chair---
-            Chairs[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-50), new Vector2(30, 50), chairColor, scene);
+            Chairs[i] = new Prop(new Vector2(randomX, BasicWindow.Floor.Y-50), _chairTexture, scene, false);
         }
     }
 

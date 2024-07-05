@@ -1,6 +1,6 @@
 # Stuck-in-a-loop
 #### Why I made this game?
-Well this is a challange that me and my friend [MrJoelao](https://github.com/MrJoelao) wanted to do:<br>
+Well this is a challange that me and my friend **[MrJoelao](https://github.com/MrJoelao)** wanted to do:<br>
 *A 1vs1 using Ray lib c# where the point is to make a video game in just 1 week based on the theme "stuck in a loop"*
 
 ---

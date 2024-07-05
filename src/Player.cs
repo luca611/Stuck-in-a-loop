@@ -32,14 +32,48 @@ public class Player
     /// </summary>
     public bool IsAlive = true;
     
+    /// <summary>
+    /// <c>float</c> Immunity time left in seconds
+    /// </summary>
     private float _immunityTimeLeft; // Immunity time left in seconds
 
+    /// <summary>
+    /// <c>Texture2D</c> Texture of the player
+    /// </summary>
     public Texture2D PlayerTexture;
     
+    /// <summary>
+    /// <c>int</c> Frames counter for the animations
+    /// </summary>
     private static int _frames = 0;
-    private const int ShootingDuration = 45; // Duration in frames
+    
+    /// <summary>
+    /// <c>const</c> <c>int</c> Duration of the shooting animation in frames
+    /// </summary>
+    private const int ShootingDuration = 45; 
+    
+    /// <summary>
+    /// <c>const</c> <c>int</c> Number of frames for the walking animation
+    /// </summary>
     private const int WalkingFrames = 30;
+    
+    /// <summary>
+    /// <c>const</c> <c>int</c> Number of frames for the running animation
+    /// </summary>
     private const int RunningFrames = 15;
+    
+    
+    //-----------------------------------RESOURCES--------------------------------------
+    
+    private readonly Texture2D _idleR = LoadTexture("./resources/Player/IdleR.png") ;
+    private readonly Texture2D _idleL = LoadTexture("./resources/Player/IdleL.png") ;
+    private readonly Texture2D _runningR = LoadTexture("./resources/Player/RunningR.png") ;
+    private readonly Texture2D _runningL = LoadTexture("./resources/Player/RunningL.png") ;
+    private readonly Texture2D _shootingR = LoadTexture("./resources/Player/ShootingR.png") ;
+    private readonly Texture2D _shootingL = LoadTexture("./resources/Player/ShootingL.png") ;
+    private readonly Texture2D _shootingRf = LoadTexture("./resources/Player/ShootingRF.png") ;
+    private readonly Texture2D _shootingLf = LoadTexture("./resources/Player/ShootingLF.png") ;
+    
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -57,7 +91,7 @@ public class Player
         MovementSpeed = movementSpeed;
         Position = Position with { X = startingX };
         Position = Position with { Y = startingY };
-        PlayerTexture = LoadTexture("./resources/Player/IdleR.png");
+        PlayerTexture = _idleR;
     }
 
     /// <summary>
@@ -74,7 +108,7 @@ public class Player
         if (Shooting.IsShooting) UpdateShootingAnimation();
         else if(Movement.IsRunning) UpdateRunningAnimation();
         else if(Movement.IsWalking) UpdateWalkingAnimation();
-        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        else PlayerTexture = Movement.Direction == 0 ? _idleR : _idleL;
         
 
         Position = Movement.UpdateMovement(this);
@@ -95,8 +129,8 @@ public class Player
         }
         
         _frames++;
-        if (_frames <30) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingRF.png" : "./resources/Player/ShootingLF.png");
-        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingR.png" : "./resources/Player/ShootingL.png");
+        if (_frames <30) PlayerTexture = Movement.Direction == 0 ? _shootingRf : _shootingLf;
+        else PlayerTexture = Movement.Direction == 0 ? _shootingR : _shootingL;
 
         if (_frames < ShootingDuration) return; // Check if the shooting animation is over
         
@@ -112,8 +146,8 @@ public class Player
         if (!Movement.IsRunning) return;
         
         _frames++;
-        if (_frames < RunningFrames/2) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/RunningR.png" : "./resources/Player/RunningL.png");
-        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        if (_frames < RunningFrames/2) PlayerTexture = Movement.Direction == 0 ? _runningR : _runningL;
+        else PlayerTexture = Movement.Direction == 0 ? _idleR : _idleL;
         if (_frames >= RunningFrames) _frames = 0;
     }
     
@@ -125,8 +159,8 @@ public class Player
         if (!Movement.IsWalking) return;
         
         _frames++;
-        if (_frames < WalkingFrames/2) PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/runningR.png" : "./resources/Player/RunningL.png");
-        else PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        if (_frames < WalkingFrames/2) PlayerTexture = Movement.Direction == 0 ? _runningR : _runningL;
+        else PlayerTexture = Movement.Direction == 0 ? _idleR : _idleL;
             
         if (_frames >= WalkingFrames) _frames = 0;
     }

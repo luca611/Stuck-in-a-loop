@@ -11,7 +11,7 @@ namespace Stuck_in_a_loop_challange;
 /// <param name="size"> <c>Vector2</c> size of the prop</param>
 /// <param name="color"> <c>Color</c> color of the prop</param>
 /// <param name="scene"> <c>int</c> scene where the prop is</param>
-public class Prop(Vector2 position, Vector2 size, Color color, int scene)
+public class Prop(Vector2 position, Texture2D texture, int scene, bool IsLight)
 {
     //---------------------------------CODE-------------------------------------
     
@@ -21,6 +21,13 @@ public class Prop(Vector2 position, Vector2 size, Color color, int scene)
     public void DrawProp()
     {
         if(scene != Scenes.CurrentScene) return;
-        DrawRectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y, color);
+        if (!IsLight)
+        {
+            DrawTexture(texture, (int)position.X, (int)position.Y, Color.White);
+            return;
+        }
+        
+        if(LightSystem.IsBrakeOn)  DrawTexture(PropSystem.LightOnTexture, (int)position.X, (int)position.Y, Color.White);
+        else DrawTexture(PropSystem.LightOffTexture, (int)position.X, (int)position.Y, Color.White);
     }
 }

@@ -14,7 +14,7 @@ public class LightSystem
     /// <summary>
     /// <c>bool</c> Flag to check if the brake is on
     /// </summary>
-    private static bool _isBrakeOn = true;
+    public static bool IsBrakeOn = true;
 
     /// <summary>
     /// <c>Vector2</c> position of the brake
@@ -76,11 +76,11 @@ public class LightSystem
         var distanceToPlayer = Vector2.Distance(_position, player.Position);
     
         // Check if the brake is already on, the key is not pressed, the player is not within 50 pixels, or not in the same scene
-        if (!IsKeyPressed(KeyboardKey.B) || _isBrakeOn || distanceToPlayer > 50 || Scenes.CurrentScene != _brakeScene) return;
+        if (!IsKeyPressed(KeyboardKey.B) || IsBrakeOn || distanceToPlayer > 50 || Scenes.CurrentScene != _brakeScene) return;
     
         // Reset variables
         _lastToggleTime = GetTime();
-        _isBrakeOn = true;
+        IsBrakeOn = true;
     
         // Reset the difficulty
         EnemyEngine.Difficulty = 1;
@@ -91,8 +91,8 @@ public class LightSystem
     /// </summary>
     private static void ToggleBrake()
     {
-        if (!_isBrakeOn) return; //the brake was alr off
-        if (GetTime() - _lastToggleTime > ToggleInterval) _isBrakeOn = false;
+        if (!IsBrakeOn) return; //the brake was alr off
+        if (GetTime() - _lastToggleTime > ToggleInterval) IsBrakeOn = false;
     }
 
 
@@ -103,7 +103,7 @@ public class LightSystem
     {
         ToggleBrake();
         checkTurnOn(player);
-        if (!_isBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 1000);
+        if (!IsBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 1000);
     }
     
     /// <summary>
@@ -119,7 +119,7 @@ public class LightSystem
     /// </summary>
     public static void DrawLights()
     {
-        if (_isBrakeOn) return;//if the brake is on don't draw the lights
+        if (IsBrakeOn) return;//if the brake is on don't draw the lights
         var overlayColor = new Color(0, 0, 0, 150);
         DrawRectangle(0, 0, BasicWindow.ScreenWidth, BasicWindow.ScreenHeight, overlayColor);
     }
@@ -129,7 +129,7 @@ public class LightSystem
     /// </summary>
     public static void UpdateAndDrawWarningText()
     {
-        if (_isBrakeOn) return; //no need to draw the text if the brake is on
+        if (IsBrakeOn) return; //no need to draw the text if the brake is on
         //--blink the text--
         if (GetTime() - _lastToggleTextTime > _toggleInterval)
         {
