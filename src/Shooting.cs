@@ -45,16 +45,20 @@ public static class Shooting
     /// </summary>
     private static int _ammo = 10;
 
+    public static bool IsShooting;
+
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
     /// check if the player is shooting and in that case handle the shooting
     /// </summary>
     /// <param name="player"><c>Vector2</c> player (it only uses its position)</param>
-    public static void HandleShooting(Vector2 player)
+    public static void HandleShooting(Player player)
     {
         if (!IsPlayerShooting() || !(GetTime() - _lastShotTime >= ShotDelay)) return;
-        Shoot(player);
+        IsShooting = true;
+        Console.Write("Shooting\n:" + IsShooting);
+        Shoot(player.Position);
         _lastShotTime = GetTime();
     }
 

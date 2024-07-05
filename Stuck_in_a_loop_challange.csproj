@@ -12,16 +12,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="resources\Player\" />
-      <Folder Include="src\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="IdleR.png">
+      <None Update="resources\Player\IdleR.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="resources\Player\UIdle_LProtagonist.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="UIdle_LProtagonist.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Update="resources\Player\ShootingL.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="resources\Player\ShootingR.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="resources\Player\IdleL.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="resources\Player\ShootingLF.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

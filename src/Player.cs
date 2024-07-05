@@ -34,9 +34,10 @@ public class Player
     
     private float _immunityTimeLeft; // Immunity time left in seconds
 
-    private Texture2D _playerTexture;
-
-    private Image image;
+    public Texture2D PlayerTexture;
+    
+    private static int shootingFrames = 0;
+    private const int ShootingDuration = 120; // Duration in frames
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -49,12 +50,12 @@ public class Player
     public Player( int health, float movementSpeed, int startingX, int startingY)
     {
         Size = Size with { X = 50 };
-        Size = Size with { Y = 90 };
+        Size = Size with { Y = 110 };
         Health = health;
         MovementSpeed = movementSpeed;
         Position = Position with { X = startingX };
         Position = Position with { Y = startingY };
-        _playerTexture = LoadTexture("./IdleR.png");
+        PlayerTexture = LoadTexture("./resources/Player/IdleR.png");
     }
 
     /// <summary>
@@ -66,10 +67,34 @@ public class Player
         {
             _immunityTimeLeft -= GetFrameTime(); // Decrease immunity time by the frame time
         }
-        
+
+        if (Shooting.IsShooting)
+        {
+            shootingFrames++;
+            
+            
+            if (shootingFrames <30)
+            {
+                PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingRF.png" : "./resources/Player/ShootingLF.png");
+            }
+            else
+            {
+                PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/ShootingR.png" : "./resources/Player/ShootingL.png");
+            }
+            if (shootingFrames >= ShootingDuration)
+            {
+                Shooting.IsShooting = false;
+                shootingFrames = 0;
+            }
+        }
+        else
+        {
+            PlayerTexture = LoadTexture(Movement.Direction == 0 ? "./resources/Player/IdleR.png" : "./resources/Player/IdleL.png");
+        }
+
         Position = Movement.UpdateMovement(this);
         Position = Scenes.UpdateScene(Position);
-        Shooting.HandleShooting(Position);
+        Shooting.HandleShooting(this);
     }
     
     /// <summary>
@@ -108,10 +133,8 @@ public class Player
     /// </summary>
     public void DrawPlayer()
     {
-        
-        UnloadImage(image);
         // Draw the image at the player's position
-        DrawTexture(_playerTexture, (int)Position.X, (int)Position.Y, Color.White);
+        DrawTexture(PlayerTexture, (int)Position.X, (int)Position.Y, Color.White);
 
         DrawHeath();
     }
