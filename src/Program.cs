@@ -1,16 +1,19 @@
-﻿using Raylib_cs;
+﻿using System.Numerics;
+using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange
 {
-    public class BasicWindow
+    public class GameWindow
     {
         //------screen settings---------
         public const int ScreenWidth = 800;
         public const int ScreenHeight = 450;
 
         //-------the floor---
+        public static Texture2D floorTexture=LoadTexture("./resources/Env/floor.png");
         public static Rectangle Floor = new(0, ScreenHeight - 100, ScreenWidth, 100);
+        
         
         public static int Main()
         {
@@ -40,15 +43,15 @@ namespace Stuck_in_a_loop_challange
                 //---drawing the game frame-----
                 BeginDrawing();
                 ClearBackground(Scenes.SceneList[Scenes.CurrentScene]);
-                DrawRectangleRec(Floor, Color.Green);
+                DrawTextureEx(floorTexture, new Vector2(0, ScreenHeight - 100), 0, 1, Color.White);
                 PropSystem.DrawProps();
                 LightSystem.DrawBrake();
                 EnemyEngine.Draw();
                 Shooting.Draw();
                 mainCharac.DrawPlayer();
-                //DrawRectangle((int)Player.X, (int)Player.Y, 50, 100,Color.Maroon);
-                LightSystem.UpdateAndDrawWarningText();
+                UiComponents.DrawHitOverlay(mainCharac);
                 LightSystem.DrawLights();
+                LightSystem.UpdateAndDrawWarningText();
                 //---draw ui components---
                 UiComponents.DrawUiComponents();
                 EndDrawing();

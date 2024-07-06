@@ -95,7 +95,7 @@ namespace Stuck_in_a_loop_challange
         /// <returns><c>bool</c> true if the projectile is hitting the ground false if not</returns>
         private bool IsHittingGround()
         {
-            return CheckCollisionRecs(Size, BasicWindow.Floor);
+            return CheckCollisionRecs(Size, GameWindow.Floor);
         }
     
         /// <summary>

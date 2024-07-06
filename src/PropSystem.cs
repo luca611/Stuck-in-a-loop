@@ -109,9 +109,9 @@ public static class PropSystem
         do
         {
             positionIsValid = true;
-            var randomX = random.Next(0, BasicWindow.ScreenWidth); 
+            var randomX = random.Next(0, GameWindow.ScreenWidth); 
             scene = random.Next(0, Scenes.SceneList.Length); 
-            newPosition = new Vector2(randomX, BasicWindow.Floor.Y - 150);
+            newPosition = new Vector2(randomX, GameWindow.Floor.Y - 150);
             
             var tempDoor = new Prop(newPosition, DoorTexture, scene, false);
             if (IsPropClipping(tempDoor))
@@ -149,7 +149,7 @@ public static class PropSystem
         do
         {
             positionIsValid = true;
-            var randomX = random.Next(0, BasicWindow.ScreenWidth); 
+            var randomX = random.Next(0, GameWindow.ScreenWidth); 
             scene = random.Next(0, Scenes.SceneList.Length); 
             newPosition = new Vector2(randomX, 40);
 
@@ -187,9 +187,9 @@ public static class PropSystem
             do
             {
                 positionIsValid = true;
-                var randomX = random.Next(0, BasicWindow.ScreenWidth);
+                var randomX = random.Next(0, GameWindow.ScreenWidth);
                 scene = random.Next(0, Scenes.SceneList.Length); 
-                newPosition = new Vector2(randomX, BasicWindow.Floor.Y - 60);
+                newPosition = new Vector2(randomX, GameWindow.Floor.Y - 60);
                 
                 var tempVine = new Prop(newPosition, VineTexture, scene, false);
                 if (IsPropClipping(tempVine)) positionIsValid = false;
@@ -223,9 +223,9 @@ public static class PropSystem
             do
             {
                 positionIsValid = true;
-                var randomX = random.Next(0, BasicWindow.ScreenWidth); 
+                var randomX = random.Next(0, GameWindow.ScreenWidth); 
                 scene = random.Next(0, Scenes.SceneList.Length); 
-                newPosition = new Vector2(randomX, BasicWindow.Floor.Y - 50);
+                newPosition = new Vector2(randomX, GameWindow.Floor.Y - 45);
 
                 var tempChair = new Prop(newPosition, ChairTexture, scene, false);
                 if (IsPropClipping(tempChair)) positionIsValid = false;

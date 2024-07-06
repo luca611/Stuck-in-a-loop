@@ -70,12 +70,12 @@ public class Enemy
         
         //---randomize the position of the enemy---
         var random = new Random();
-        float randomX = random.Next(0, BasicWindow.ScreenWidth);
+        float randomX = random.Next(0, GameWindow.ScreenWidth);
         
         if (Math.Abs(randomX - playerPosition.X) < 100)
         {
             randomX += 100 * (randomX < playerPosition.X ? -1 : 1);
-            randomX = Math.Clamp(randomX, 0, BasicWindow.ScreenWidth - Enemy.Size.Width);
+            randomX = Math.Clamp(randomX, 0, GameWindow.ScreenWidth - Enemy.Size.Width);
         }
         
         //---set the position of the enemy---

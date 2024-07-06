@@ -61,8 +61,8 @@ public class Player
     /// <c>const</c> <c>int</c> Number of frames for the running animation
     /// </summary>
     private const int RunningFrames = 15;
-    
-    
+
+    public bool wasHit;
     //-----------------------------------RESOURCES--------------------------------------
     
     private readonly Texture2D _idleR = LoadTexture("./resources/Player/IdleR.png") ;
@@ -172,6 +172,7 @@ public class Player
     {
         if (!(_immunityTimeLeft <= 0)) return; // Check if the player is immune
         
+        wasHit = true;
         Health--;
         _immunityTimeLeft = 5; // Set immunity time to 5 seconds
         if (Health > 0) return;// Check if the player is still alive
@@ -190,7 +191,7 @@ public class Player
         var paddingRight = 10; 
         var paddingTop = 10; 
         var textWidth = MeasureText(healthText, fontSize);
-        var textX = BasicWindow.ScreenWidth - textWidth - paddingRight;
+        var textX = GameWindow.ScreenWidth - textWidth - paddingRight;
         var textY = paddingTop;
 
         DrawText(healthText, textX, textY, fontSize, Color.White);

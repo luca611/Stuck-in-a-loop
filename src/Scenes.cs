@@ -28,7 +28,7 @@ public static class Scenes
     /// <returns><c>Vector2</c> updated position of the player (positioned at the sides of the screen)</returns>
     public static Vector2 UpdateScene(Vector2 player)
     {
-        if (player.X > BasicWindow.ScreenWidth) // If the player is out of the screen (right)
+        if (player.X > GameWindow.ScreenWidth) // If the player is out of the screen (right)
         {
             CurrentScene = (CurrentScene + 1) % SceneList.Length; // Switch to the next scene
             player.X = 0;                                         // Reset player position
@@ -36,7 +36,7 @@ public static class Scenes
         else if (player.X < 0) // If the player is out of the screen (left)
         {
             CurrentScene = (CurrentScene - 1 + SceneList.Length) % SceneList.Length; // Switch to the previous scene
-            player.X = BasicWindow.ScreenWidth;                                      // Reset player position
+            player.X = GameWindow.ScreenWidth;                                      // Reset player position
         }
         
         return player;
@@ -51,13 +51,13 @@ public static class Scenes
     {
         switch (bullet.Position.X)
         {
-            case > BasicWindow.ScreenWidth:
+            case > GameWindow.ScreenWidth:
                 bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene + 1) % SceneList.Length;
                 bullet.Position = bullet.Position with { X = 0 };                               // Reset position to the start of the next scene
                 break;
             case < 0:
                 bullet.CurrentProjectileScene = (bullet.CurrentProjectileScene - 1 + SceneList.Length) % SceneList.Length;
-                bullet.Position = bullet.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
+                bullet.Position = bullet.Position with { X = GameWindow.ScreenWidth };         // Reset position to the end of the previous scene
                 break;
         }
 
@@ -74,13 +74,13 @@ public static class Scenes
     {
         switch (badGuy.Position.X)
         {
-            case > BasicWindow.ScreenWidth:
+            case > GameWindow.ScreenWidth:
                 badGuy.EnemyScene = (badGuy.EnemyScene + 1) % SceneList.Length;
                 badGuy.Position = badGuy.Position with { X = 0 };                               // Reset position to the start of the next scene
                 break;
             case < 0:
                 badGuy.EnemyScene = (badGuy.EnemyScene - 1 + SceneList.Length) % SceneList.Length;
-                badGuy.Position = badGuy.Position with { X = BasicWindow.ScreenWidth };         // Reset position to the end of the previous scene
+                badGuy.Position = badGuy.Position with { X = GameWindow.ScreenWidth };         // Reset position to the end of the previous scene
                 break;
         }
 

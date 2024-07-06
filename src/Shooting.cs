@@ -123,8 +123,8 @@ public static class Shooting
     {
         var reloadText = "Reload [R]";
         var textWidth = MeasureText(reloadText, 20);
-        var centerX = BasicWindow.ScreenWidth / 2 - textWidth / 2;
-        var centerY = BasicWindow.ScreenHeight - (BasicWindow.ScreenHeight - 100);
+        var centerX = GameWindow.ScreenWidth / 2 - textWidth / 2;
+        var centerY = GameWindow.ScreenHeight - (GameWindow.ScreenHeight - 100);
         DrawText(reloadText, centerX, centerY, 20, Color.White);
     }
     

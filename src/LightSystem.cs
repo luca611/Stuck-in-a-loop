@@ -64,7 +64,7 @@ public class LightSystem
     /// </summary>
     public LightSystem()
     {
-        _position = new Vector2(Random.Next(0, BasicWindow.ScreenWidth), BasicWindow.ScreenHeight - 190); // Random X, fixed Y
+        _position = new Vector2(Random.Next(0, GameWindow.ScreenWidth), GameWindow.ScreenHeight - 190); // Random X, fixed Y
         _brakeScene = Random.Next(0, Scenes.SceneList.Length); // Random scene selection
     }
     
@@ -123,7 +123,7 @@ public class LightSystem
     {
         if (IsBrakeOn) return;//if the brake is on don't draw the lights
         var overlayColor = new Color(0, 0, 0, 150);
-        DrawRectangle(0, 0, BasicWindow.ScreenWidth, BasicWindow.ScreenHeight, overlayColor);
+        DrawRectangle(0, 0, GameWindow.ScreenWidth, GameWindow.ScreenHeight, overlayColor);
     }
     
     /// <summary>
@@ -143,8 +143,8 @@ public class LightSystem
         //--draw the text--
         var warningText = "Warning: Brake is off!\n"; //could be a const, but it's only used here sooo 
         var textWidth = MeasureText(warningText, 20);
-        var centerX = BasicWindow.ScreenWidth / 2 - textWidth / 2;
-        var centerY = BasicWindow.ScreenHeight - 300;
+        var centerX = GameWindow.ScreenWidth / 2 - textWidth / 2;
+        var centerY = GameWindow.ScreenHeight - 300;
         DrawText(warningText, centerX, centerY, 20, Color.Red);
     }
 }
