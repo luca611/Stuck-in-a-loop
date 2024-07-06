@@ -28,11 +28,9 @@ namespace Stuck_in_a_loop_challange
             //--------actual game loop-------
             while (!WindowShouldClose())
             {
-                Console.Write(EnemyEngine.Difficulty+"\n");
                 PropSystem.InitProps();
                 if (!UiComponents.IsPaused)
                 {
-                    DrawText("developing state\nlast addition: Light system", 10, 10, 20, Color.White);
                     //---update the player-----
                     mainCharac.UpdatePlayer();
                     //---generate and move the enemies-----

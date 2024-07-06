@@ -102,6 +102,7 @@ public class LightSystem
     /// </summary>
     public static void UpdateLightSystem(Player player)
     {
+        if(UiComponents.IsPaused) return;
         ToggleBrake();
         checkTurnOn(player);
         if (!IsBrakeOn) EnemyEngine.Difficulty += (_lastToggleTime / 10000);
@@ -131,6 +132,7 @@ public class LightSystem
     /// </summary>
     public static void UpdateAndDrawWarningText()
     {
+        if(UiComponents.IsPaused) return;
         if (IsBrakeOn) return; //no need to draw the text if the brake is on
         //--blink the text--
         if (GetTime() - _lastToggleTextTime > _toggleInterval)
