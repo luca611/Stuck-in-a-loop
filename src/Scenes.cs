@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
 
@@ -10,14 +11,14 @@ public static class Scenes
 {
     //------------------------------VARIABLES--------------------------------------
     /// <summary>
-    /// <c>Color[]</c> Array of colors representing the scenes
+    /// <c>Color[]</c> Array of textures representing the scenes
     /// </summary>
-    public static readonly Color[] SceneList = new Color[] { Color.Red, Color.Brown, Color.Blue };
-    
+    public static readonly Color[] SceneList = new Color[] { Color.Beige, Color.Beige, Color.Blue};
     /// <summary>
     /// <c>int</c> Index of the current scene (default is 0)
     /// </summary>
     public static int CurrentScene;
+
     
     //-----------------------------------CODE--------------------------------------
     

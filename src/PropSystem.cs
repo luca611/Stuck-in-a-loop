@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 namespace Stuck_in_a_loop_challange;
@@ -63,7 +64,6 @@ public static class PropSystem
     public static Texture2D LightOnTexture = LoadTexture("./resources/Props/lightOn.png");
     public static Texture2D BrakeOn= LoadTexture("./resources/Props/brakeOn.png");
     public static Texture2D BrakeOff=LoadTexture("./resources/Props/brakeOff.png");
-    
     //-----------------------------------CODE--------------------------------------
     
     /// <summary>
@@ -151,7 +151,7 @@ public static class PropSystem
             positionIsValid = true;
             var randomX = random.Next(0, GameWindow.ScreenWidth); 
             scene = random.Next(0, Scenes.SceneList.Length); 
-            newPosition = new Vector2(randomX, 40);
+            newPosition = new Vector2(randomX, 39);
 
             
             var tempLight = new Prop(newPosition, LightOnTexture, scene, true);
@@ -250,6 +250,7 @@ public static class PropSystem
     /// </summary>
     /// <param name="propToCheck"> <c>Prop</c> prop to check</param>
     /// <returns> <c>bool</c> true if the prop is clipping with another prop false if not</returns>
+    [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: Stuck_in_a_loop_challange.Prop[]; size: 90144MB")]
     private static bool IsPropClipping(Prop propToCheck)
     {
         //minimum distance for clipping

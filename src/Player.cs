@@ -197,6 +197,20 @@ public class Player
         DrawText(healthText, textX, textY, fontSize, Color.White);
     }
     
+    
+    public void drawKilledEnemies()
+    {
+        var healthText = $"Killed Enemy: {EnemyEngine.killedEnemies}";
+        var fontSize = 20; 
+        var paddingRight = 10; 
+        var paddingTop = 10; 
+        var textWidth = MeasureText(healthText, fontSize);
+        var textX = paddingRight;
+        var textY = paddingTop;
+
+        DrawText(healthText, textX, textY, fontSize, Color.White);
+    }
+    
     /// <summary>
     /// Draw the player on the screen
     /// </summary>
@@ -204,7 +218,7 @@ public class Player
     {
         // Draw the image at the player's position
         DrawTexture(PlayerTexture, (int)Position.X, (int)Position.Y, Color.White);
-
+        drawKilledEnemies();
         DrawHeath();
     }
 }

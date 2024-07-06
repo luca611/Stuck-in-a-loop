@@ -104,7 +104,7 @@ public class LightSystem
     {
         ToggleBrake();
         checkTurnOn(player);
-        if (!IsBrakeOn) EnemyEngine.Difficulty += (int)(2 * _lastToggleTime / 1000);
+        if (!IsBrakeOn) EnemyEngine.Difficulty += (_lastToggleTime / 10000);
     }
     
     /// <summary>

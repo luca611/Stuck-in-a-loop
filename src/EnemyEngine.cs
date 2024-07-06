@@ -21,8 +21,9 @@ public static class EnemyEngine
     /// <summary>
     /// <c>int</c> difficulty of the game
     /// </summary>
-    public static int Difficulty = 1;
+    public static double Difficulty = 1;
     
+    public static int killedEnemies = 0;
     //-----------------------------------CODE--------------------------------------
     
     /// <summary>
@@ -35,13 +36,13 @@ public static class EnemyEngine
         
         //----randomize the health and speed of the enemy based on the diff.----
         var random = new Random();
-        var health = random.Next(1, 1+Difficulty);
+        int health = random.Next(1, (int)(1+Difficulty));
         var scene = random.Next(0, Scenes.SceneList.Length);
         while (scene == Scenes.CurrentScene)
         {
             scene = random.Next(0, Scenes.SceneList.Length); // Generate a new scene index
         }
-        float movementSpeed = random.Next(1, Difficulty);
+        float movementSpeed = random.Next(1, (int)Difficulty);
             
         //----create the enemy and add it to the list----
         var enemy = new Enemy(health, movementSpeed,scene);
@@ -63,7 +64,7 @@ public static class EnemyEngine
             enemy.HitPlayer(player);
             //----if the enemy is dead remove it from the list----
             //⚠ this condition shouldn't be touched to avoid concurrent modification ⚠ 
-            if(enemy.IsAlive == false) ActiveEnemies.Remove(enemy);
+            if(enemy.IsAlive == false){ActiveEnemies.Remove(enemy); killedEnemies++;}
             else enemy.Update(player.Position);
         }
     }
@@ -79,4 +80,5 @@ public static class EnemyEngine
             ActiveEnemies[i].Draw();
         }
     }
+    
 }
