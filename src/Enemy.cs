@@ -41,8 +41,20 @@ public class Enemy
     /// </summary>
     public bool IsAlive = true;
     
-    public int EnemyScene; // Scene where the enemy is
-    private int _direction; // Direction of the enemy
+    /// <summary>
+    /// <c>int</c> Scene where the enemy is
+    /// </summary>
+    public int EnemyScene; 
+    
+    /// <summary>
+    /// <c>int</c> Direction of the enemy
+    /// </summary>
+    private int _direction;
+    
+    /// <summary>
+    /// <c>int</c> Frame of the animation
+    /// </summary>
+    private int _animationFrame;
     
     //-----------------------------------CODE--------------------------------------
 
@@ -54,7 +66,9 @@ public class Enemy
     /// <param name="enemyScene"><c>int</c> starting scene of the enemy</param>
     public Enemy( int health, float movementSpeed, int enemyScene)
     {
-        Position =  new Vector2 (0, 250);
+        var random = new Random();
+        float randomY = random.Next(255, 270);
+        Position =  new Vector2 (0, randomY);
         Health = health;
         MovementSpeed = movementSpeed;
         EnemyScene = enemyScene;
@@ -79,7 +93,7 @@ public class Enemy
         }
         
         //---set the position of the enemy---
-        Position = new Vector2(randomX, 250);
+        Position = new Vector2(randomX, Position.Y);
         _enemySummoned = true;
     }
     
@@ -98,6 +112,7 @@ public class Enemy
             if (!(Math.Abs(direction.X) > 1)) return;
         
             direction = Vector2.Normalize(direction);
+            _direction= direction.X > 0 ? 1 : -1;
             var movement = direction * MovementSpeed;
         
             //----update the position of the enemy----
@@ -129,7 +144,17 @@ public class Enemy
     /// </summary>
     public void Draw()
     {
-        if(IsAlive && EnemyScene == Scenes.CurrentScene) DrawRectangleRec(new Rectangle(Position.X, Position.Y, Enemy.Size.Width, Enemy.Size.Height), new Color(0, 100, 0, 255)); // Dark green
+        if(EnemyScene != Scenes.CurrentScene) return;
+        Texture2D textureToDraw;
+
+        // Determine the direction and select the appropriate texture for the current frame
+        if (_direction > 0) textureToDraw = _animationFrame < 30 ? EnemyEngine.ZombieRight : EnemyEngine.ZombieRight2;
+        else textureToDraw = _animationFrame < 30 ? EnemyEngine.ZombieLeft : EnemyEngine.ZombieLeft2;
+        
+        // Draw the selected texture
+        DrawTexture(textureToDraw, (int)Position.X, (int)Position.Y, Color.White);
+        _animationFrame++;
+        if (_animationFrame >= 60) _animationFrame = 0;
     }
     
     /// <summary>

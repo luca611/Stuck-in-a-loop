@@ -197,10 +197,27 @@ public class Player
         DrawText(healthText, textX, textY, fontSize, Color.White);
     }
     
-    
-    public void drawKilledEnemies()
+    /// <summary>
+    /// method to draw the player difficulty
+    /// </summary>
+    private void DrawDifficulty()
     {
-        var healthText = $"Killed Enemy: {EnemyEngine.killedEnemies}";
+        var healthText = $"Difficulty: {(int)EnemyEngine.Difficulty}";
+        var fontSize = 20; 
+        var paddingTop = 10; 
+        var textWidth = MeasureText(healthText, fontSize);
+        var textX = GameWindow.ScreenWidth/2 - textWidth/2;
+        var textY = paddingTop;
+
+        DrawText(healthText, textX, textY, fontSize, Color.White);
+    }
+
+    /// <summary>
+    /// Draw the killed enemies on the screen
+    /// </summary>
+    private static void DrawKilledEnemies()
+    {
+        var healthText = $"Killed Enemy: {EnemyEngine.KilledEnemies}";
         var fontSize = 20; 
         var paddingRight = 10; 
         var paddingTop = 10; 
@@ -218,7 +235,8 @@ public class Player
     {
         // Draw the image at the player's position
         DrawTexture(PlayerTexture, (int)Position.X, (int)Position.Y, Color.White);
-        drawKilledEnemies();
+        DrawKilledEnemies();
+        DrawDifficulty();
         DrawHeath();
     }
 }

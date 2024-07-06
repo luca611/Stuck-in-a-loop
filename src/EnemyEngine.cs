@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Stuck_in_a_loop_challange;
 
@@ -23,7 +25,17 @@ public static class EnemyEngine
     /// </summary>
     public static double Difficulty = 1;
     
-    public static int killedEnemies = 0;
+    /// <summary>
+    /// <c>int</c> amount of enemies killed 
+    /// </summary>
+    public static int KilledEnemies;
+    
+    //--------------------------------RESOURCES-------------------------------------
+    public static Texture2D ZombieRight=LoadTexture("./resources/Zombie/ZombieRight1.png");
+    public static Texture2D ZombieRight2=LoadTexture("./resources/Zombie/ZombieRight2.png");
+    
+    public static Texture2D ZombieLeft=LoadTexture("./resources/Zombie/ZombieLeft1.png");
+    public static Texture2D ZombieLeft2=LoadTexture("./resources/Zombie/ZombieLeft2.png");
     //-----------------------------------CODE--------------------------------------
     
     /// <summary>
@@ -64,7 +76,7 @@ public static class EnemyEngine
             enemy.HitPlayer(player);
             //----if the enemy is dead remove it from the list----
             //⚠ this condition shouldn't be touched to avoid concurrent modification ⚠ 
-            if(enemy.IsAlive == false){ActiveEnemies.Remove(enemy); killedEnemies++;}
+            if(enemy.IsAlive == false){ActiveEnemies.Remove(enemy); KilledEnemies++;}
             else enemy.Update(player.Position);
         }
     }
