@@ -55,6 +55,9 @@ public static class Shooting
     /// </summary>
     public static bool ShotReset;
 
+    
+    public static readonly Texture2D BulletR = LoadTexture("./resources/Guns/BulletR.png");
+    public static readonly Texture2D BulletL = LoadTexture("./resources/Guns/BulletL.png");
     //-----------------------------------CODE--------------------------------------
 
     /// <summary>
@@ -159,13 +162,12 @@ public static class Shooting
     public static void Draw()
     {
         //update and draw all the active projectiles (if they are in the same scene as the current scene)
-        for (int i = ActiveProjectiles.Count - 1; i >= 0; i--)
+        for (var i = ActiveProjectiles.Count - 1; i >= 0; i--)
         {
             ActiveProjectiles[i] = Scenes.UpdateBulletPosition(ActiveProjectiles[i]);
             var projectile = ActiveProjectiles[i];
 
-            if (projectile.CurrentProjectileScene == Scenes.CurrentScene)
-                DrawRectangleRec(projectile.Size, Color.Black);
+            projectile.Draw();
 
             if (HasShootedAnEnemy(projectile)) 
                 ActiveProjectiles.RemoveAt(i);

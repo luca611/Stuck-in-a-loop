@@ -38,8 +38,10 @@ namespace Stuck_in_a_loop_challange
         /// <summary>
         /// <c>float</c> amount of px before gravity starts to apply to the projectile
         /// </summary>
-        private float GravityResistence { get; set; } 
-        
+        private float GravityResistence { get; set; }
+
+
+        private Texture2D projectileTexture;
         //---------------------------------CODE-------------------------------------
         
         /// <summary>
@@ -57,6 +59,7 @@ namespace Stuck_in_a_loop_challange
             DistanceTravelled = 0;
             GravityResistence = gravityResistence;
             CurrentProjectileScene = Scenes.CurrentScene;
+            projectileTexture = IsGoingRight() ? Shooting.BulletR : Shooting.BulletL;
         }
         
         /// <summary>
@@ -93,6 +96,24 @@ namespace Stuck_in_a_loop_challange
         private bool IsHittingGround()
         {
             return CheckCollisionRecs(Size, BasicWindow.Floor);
+        }
+    
+        /// <summary>
+        /// Easy way to check if the projectile is going right
+        /// </summary>
+        /// <returns> <c>bool</c> true if the projectile is going right false if not</returns>
+        private bool IsGoingRight()
+        {
+            return Speed.X > 0;
+        }
+        
+        /// <summary>
+        /// Draw the projectile
+        /// </summary>
+        public void Draw()
+        {
+            if (CurrentProjectileScene == Scenes.CurrentScene)
+                DrawTexture(projectileTexture, (int)Position.X, (int)Position.Y, Color.White);
         }
     }
 }
