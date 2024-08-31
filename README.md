@@ -2,6 +2,14 @@
 #### Why I made this game?
 Well this is a challange that me and my friend **[MrJoelao](https://github.com/MrJoelao)** wanted to do:<br>
 *A 1vs1 using Ray lib c# where the point is to make a video game in just 1 week based on the theme "stuck in a loop"*
+---
+## Where to play it 👻
+itch.io: https://luiis71.itch.io/the-hospital-survival
+
+## Preview Images
+
+![image](https://github.com/user-attachments/assets/54a54c7e-afa1-463b-b7b2-858ada9a489b)
+![image](https://github.com/user-attachments/assets/7d96db10-f077-43c7-8ac6-134fa4cc3421)
 
 ---
 ## Lore of the game 👻
